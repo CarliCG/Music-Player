@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <script src="https://kit.fontawesome.com/805dac0802.js" crossorigin="anonymous"></script>
     <title>Bento Music</title>
 </head>
@@ -13,96 +14,125 @@
             <button type="button">Log Out</button>
         </nav>
     </header> -->
-    <header id="cabecera">
-        <div id="contenedor" >
-            <div id="izquierda">
+    <header id="header">
+<!--         <div id="header-contenedor" > -->
+            <div class="izq" id="izquierda">
                 <h1>Bento Music</h1>
             </div>
-            <div id="derecha">
+            <div class="der" id="derecha">
+                <h2>Usuario</h2>
                 <a class="" href="#">
                     <i class="fa-solid fa-power-off"></i>&nbsp;<span>Log Out</span>
-               </a>
+                </a>
             </div>
-        </div>
+<!--         </div> -->
     </header>
-    <section class="Biblioteca general">
-        <div>
-        <input class="buscador"  type="text" placeholder="Busca tu cancion">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
+    <main>
+        <section class="bibliotecaGeneral">
+            <div class="buscador-container">
+                <input class="buscador"  type="text" placeholder="Busca tu cancion">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+    
+            <div class="biblio-container">
+                <h2 class="biblio-titulo" id="biblio-titulo">
+                    Biblioteca General
+                </h2>
+                <!-- <ul>
+                    <li onclick="cancion1">Cancion 1</li>
+                    <i class="fa-solid fa-plus"></i>
+                </ul> -->
+                <div class="biblio-lista-container">
+                    <ul class="lista-general" id="ListaGeneral"> 
+                        <li> <h3>Cancion</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
+                        </li>
+                        <li> <h3>Cancion</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
+                        </li>
+                        <li> <h3>Cancion</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    
+        <section class="reproductor">
+            <div class="musicPlayer-cover">
+                <!-- <img class="album-cover" src="./src/img/keane_hopes_and_fears.jpg" alt="music-player-cover"> -->
+                <div class="album-cover"></div>
 
-        <div class="Biblioteca canciones">
-            <h3 id="listaCanciones">
-                Biblioteca General
-            </h3>
-            <!-- <ul>
-                <li onclick="cancion1">Cancion 1</li>
-                <i class="fa-solid fa-plus"></i>
-            </ul> -->
-            <ul id="ListaGeneral"> 
-                <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
-                </li>
-                <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
-                </li>
-                <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
-                </li>
-            
-            </ul>
-        </div>
-    </section>
+                <div class="music-info-container">
+                    <h3 class="cancion-titulo">Somewhere only we know</h3>
+                    <div class="cancion-info">
+                        <div class="cancion-titulos">
+                            <p>Keane</p>
+                            <p>Hopes and Fears</p>
+                        </div>
+                        <div class="cancion-duracion">
+                            <h3>00:00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="musicPlayer-botones">
+                <div class="sonido">
+                    <i class="fa-solid fa-volume-xmark fa-2x"></i>
+                </div>
+                <div class="botones-centro">
+                    <div class="atras"><i class="fa-solid fa-backward fa-2x"></i></div>
+                    <div class="play"><i class="fa-solid fa-circle-play fa-2x"></i></div>
+                    <div class="siguiente"><i class="fa-solid fa-forward fa-2x"></i></div>
+                </div>
+                <div class="stop">
+                    <i class="fa-solid fa-stop fa-2x"></i>
+                </div>
+            </div>
+        </section>
+        <section class="listas">
+            <div class="listas-botones">
+                <div>
+                    <button type="button">Mi PlayList</button>
+                </div>
+                <div>
+                    <button type="button">Favoritos</button>
+                </div>
 
-    <section class="reproductor">
-        <div>
-            imagen
-        </div>
-        <div>
-            <i class="fa-solid fa-volume-xmark"></i>
-        </div>
-        <div>
-            <div><i class="fa-solid fa-backward"></i></div>
-            <div><i class="fa-solid fa-circle-play"></i></div>
-            <div><i class="fa-solid fa-forward"></i></div>
-        </div>
-        <div>
-            <i class="fa-solid fa-stop"></i>
-        </div>
-    </section>
-    <section class="Listas">
-        <div>
-            <button type="button">Mi PlayList</button>
-        </div>
-        <div>
-            <button type="button">Favoritos</button>
-        </div>
+            </div>
+            <div class="biblio-container bc-2">
+                <h2 class="biblio-titulo" id="biblio-titulo">
+                    My Playlist
+                </h2>
+                <div class="biblio-lista-container">
+                    <ul class="lista-general" id="ListaMyPlaylist"> 
+                        <li> <h3>Cancion</h3><i class="fa-regular fa-heart"></i><i class="fa-solid fa-trash"></i></i>
+                        </li>
+                        <li> <h3>Cancion</h3><i class="fa-regular fa-heart"></i><i class="fa-solid fa-trash"></i></i>
+                        </li>
+                        <li> <h3>Cancion</h3><i class="fa-regular fa-heart"></i><i class="fa-solid fa-trash"></i></i>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="biblio-lista-container bl-2">
+                    <ul id="ListaFavoritos"> 
+                        <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
+                        <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
+                        </li>
+                        <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
+                        </li>
+                    
+                    </ul>
+    
+                </div> -->
+            </div>
+        </section>
 
-        <ul id="ListaMyPlaylist"> 
-            <li> <h2>Cancion</h2></i><i class="fa-regular fa-heart"><i class="fa-solid fa-trash"></i></i>
-            </li>
-            <li> <h2>Cancion</h2></i><i class="fa-regular fa-heart"><i class="fa-solid fa-trash"></i></i>
-            </li>
-            <li> <h2>Cancion</h2></i><i class="fa-regular fa-heart"><i class="fa-solid fa-trash"></i></i>
-            </li>
-        
-        </ul>
-        <ul id="ListaFavoritos"> 
-            <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
-            <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
-            </li>
-            <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
-            </li>
-        
-        </ul>
-    </section>
+    </main>
     <footer id="idFooter">
-        <div id="contenedorfooster">
             <div class="">
                 <p class="">©Bento Music  2024 All rights reserved.</p>
             </div>
             <div id="">
-                <div class="">
-                    <h2 class="">Powered by Almeida, Campaña , Sandoya y Uvidia</h2>
-                </div>
-            </div> 
+                <p class="">Powered by Almeida, Campaña , Sandoya y Uvidia</p>
+            </div>
         </div>
     </footer>
 </body>
