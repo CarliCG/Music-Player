@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/805dac0802.js" crossorigin="anonymous"></script>
+    <title>Music Player</title>
+</head>
+<body>
+    <header>
+        <h1>Bento Music</h1>
+        <nav>
+            <button type="button">Log Out</button>
+        </nav>
+    </header>
+    <section class="Biblioteca general">
+        <div>
+        <input class="buscador"  type="text" placeholder="Busca tu cancion">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <div class="Biblioteca canciones">
+            <h3 id="listaCanciones">
+                Biblioteca General
+            </h3>
+            <!-- <ul>
+                <li onclick="cancion1">Cancion 1</li>
+                <i class="fa-solid fa-plus"></i>
+            </ul> -->
+            <ul id="ListaGeneral"> 
+                <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
+                </li>
+                <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
+                </li>
+                <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
+                </li>
+            
+            </ul>
+        </div>
+    </section>
+
+    <section class="reproductor">
+        <div>
+            imagen
+        </div>
+        <div>
+            <i class="fa-solid fa-volume-xmark"></i>
+        </div>
+        <div>
+            <div><i class="fa-solid fa-backward"></i></div>
+            <div><i class="fa-solid fa-circle-play"></i></div>
+            <div><i class="fa-solid fa-forward"></i></div>
+        </div>
+        <div>
+            <i class="fa-solid fa-stop"></i>
+        </div>
+    </section>
+    <section class="Listas">
+        <div>
+            <button type="button">Mi PlayList</button>
+        </div>
+        <div>
+            <button type="button">Favoritos</button>
+        </div>
+
+        <ul id="ListaMyPlaylist"> 
+            <li> <h2>Cancion</h2></i><i class="fa-regular fa-heart"><i class="fa-solid fa-trash"></i></i>
+            </li>
+            <li> <h2>Cancion</h2></i><i class="fa-regular fa-heart"><i class="fa-solid fa-trash"></i></i>
+            </li>
+            <li> <h2>Cancion</h2></i><i class="fa-regular fa-heart"><i class="fa-solid fa-trash"></i></i>
+            </li>
+        
+        </ul>
+        <ul id="ListaFavoritos"> 
+            <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
+            <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
+            </li>
+            <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
+            </li>
+        
+        </ul>
+    </section>
+
+</body>
+</html>
