@@ -2,6 +2,15 @@ console.log("funciona");
 
 const listaMusica = ["Dare you to move", "This is home", "Somewhere only we know", "This is your life", "Stay"]
 
+/* Mostrar por defecto todas las canciones de la biblioteca */
+let contenedorBusqueda= document.getElementById("lista-general");
+listaMusica.forEach(
+    song => {
+        contenedorBusqueda.innerHTML += `<li><h3>${song}</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
+        </li>`
+    }
+    );
+    
 /* 1. Obtener value de input-buscador y ejecutar fx según evento*/
 let buscador = document.getElementById('input-buscador')
                         //evento   fx
