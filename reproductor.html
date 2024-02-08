@@ -8,12 +8,6 @@
     <title>Bento Music</title>
 </head>
 <body>
-<!--     <header>
-        <h1>Bento Music</h1>
-        <nav>
-            <button type="button">Log Out</button>
-        </nav>
-    </header> -->
     <header id="header">
 <!--         <div id="header-contenedor" > -->
             <div class="izq" id="izquierda">
@@ -38,18 +32,8 @@
                 <h2 class="biblio-titulo" id="biblio-titulo">
                     Biblioteca General
                 </h2>
-                <!-- <ul>
-                    <li onclick="cancion1">Cancion 1</li>
-                    <i class="fa-solid fa-plus"></i>
-                </ul> -->
                 <div class="biblio-lista-container">
                     <ul class="lista-general" id="lista-general"> 
-                        <!-- <li> <h3>Cancion</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
-                        </li>
-                        <li> <h3>Cancion</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
-                        </li>
-                        <li> <h3>Cancion</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
-                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -57,9 +41,7 @@
     
         <section class="reproductor">
             <div class="musicPlayer-cover">
-                <!-- <img class="album-cover" src="./src/img/keane_hopes_and_fears.jpg" alt="music-player-cover"> -->
                 <div class="album-cover"></div>
-
                 <div class="music-info-container">
                     <h3 class="cancion-titulo">Somewhere only we know</h3>
                     <div class="cancion-info">
@@ -74,6 +56,7 @@
                 </div>
             </div>
             <div class="musicPlayer-botones">
+                <audio src=”./src/songs/little_drummer_boy.mp3” preload=”metadata” loop></audio>
                 <div class="sonido">
                     <i class="fa-solid fa-volume-xmark fa-2x"></i>
                 </div>
@@ -102,7 +85,7 @@
                     My Playlist
                 </h2>
                 <div class="biblio-lista-container">
-                    <ul class="lista-general" id="ListaMyPlaylist"> 
+                    <ul class="lista-general" id="lista-general-2"> 
                         <li> <h3>Cancion</h3><i class="fa-regular fa-heart"></i><i class="fa-solid fa-trash"></i></i>
                         </li>
                         <li> <h3>Cancion</h3><i class="fa-regular fa-heart"></i><i class="fa-solid fa-trash"></i></i>
@@ -111,30 +94,29 @@
                         </li>
                     </ul>
                 </div>
-                <!-- <div class="biblio-lista-container bl-2">
-                    <ul id="ListaFavoritos"> 
-                        <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
-                        <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
-                        </li>
-                        <li> <h2>Cancion</h2><i class="fa-solid fa-plus"></i><i class="fa-solid fa-trash"></i></i>
-                        </li>
-                    
-                    </ul>
-    
-                </div> -->
             </div>
         </section>
 
     </main>
     <footer id="idFooter">
             <div class="">
-                <p class="">©Bento Music  2024 - All rights reserved.</p>
+                <p class="">© Bento Music  2024 - All rights reserved.</p>
             </div>
             <div id="">
                 <p class="">Powered by Almeida, Campaña , Sandoya y Uvidia</p>
             </div>
         </div>
     </footer>
-    <script src="./main.js"></script>
+    <script src="./clases_musicPlayer.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+<audio controls>
+    <source src="./src/songs/little_drummer_boy.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+</audio>
