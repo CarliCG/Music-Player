@@ -110,8 +110,31 @@ class Playlist{
 }
 
 class MusicPlayer{
-    constructor({currentPlayList}){
+    constructor({currentPlayList = []}){
         this.currentPlayList = currentPlayList;
+    }
+
+    reproductor() {
+        // Obtener el botón play
+        const playButton = document.getElementById("play");
+
+        // Crear instancia de Audio
+        const audio = document.getElementById("audio");
+
+        // Establecer la URL de la primera canción
+        const songs = this.currentPlayList;
+        audio.src = songs[0].urlSong;
+        console.log("current song", audio.src)
+
+        // Event listener
+        playButton.addEventListener('click', function() {
+            console.log("Funciona el clic");
+            if (audio.paused == false) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+        });
     }
     /* Los métodos a crear acá se comunicarán con el HTMLAudioElement. 
     Cuando se de click en el music player, estos métodos invocarán a su vez los métodos propios del HTMLAudioElement, y se podrán reproducir las canciones*/
@@ -129,7 +152,8 @@ const songs = [
     album: "Give yourself away",
     gender: "Christian rock",
     year: 2018,
-    urlSong: "./src/songs/stay.mp3"
+    urlSong: "./src/songs/stay.mp3",
+    urlCover: ".src/img/robbie_giveYourselfAway.jpg"
 
 }),
     new Song({
@@ -139,24 +163,26 @@ const songs = [
     album: "Chronicles of Narnia",
     gender: "Christian rock",
     year: 2008,
-    urlSong: "./src/songs/little_drummer_boy.mp3"
+    urlSong: "./src/songs/this_is_home.mp3",
+    urlCover: "./src/img/switchfoot_narnia.jpg"
 
 }),
     new Song({
-    name: "Somewhere only we know",
+    name: "Let your faith be not alone",
     artist: "Keane",
     duration: "02:50",
     album: "Hopes and fears",
     gender: "Rock",
     year: 2002,
-    urlSong: "./src/songs/letyourfaith.mp3"
+    urlSong: "./src/songs/letyourfaith.mp3",
+    urlCover: "./src/img/robbie_miracle.jpg"
 
 })]
 
 console.log(songs)
 
 /* Crear nueva canción */
-const letyourfaith = new Song({
+/* const letyourfaith = new Song({
     name: "Let your faith be not alone",
     artist: "Robbie Seay Band",
     duration: "06:00",
@@ -164,7 +190,7 @@ const letyourfaith = new Song({
     gender: "Christian rock",
     year: 2020,
     urlSong: "./src/songs/letyourfaith.mp3"
-})
+}) */
 /* Crear nuevos playlists */
 const biblioGeneral = new Playlist({
     listName: "Biblioteca General"
@@ -182,6 +208,14 @@ biblioGeneral.renderList()
 biblioGeneral.searchBy(biblioGeneral.renderList)
 
 /* Agregar canción a playlistt */
-myPlaylist.addSong(letyourfaith),
+/* myPlaylist.addSong(letyourfaith) */
 /* Mostrar playlist en su container */
 myPlaylist.renderListBtn("My PlayList")
+
+/* Music Player */
+const musicPlayer = new MusicPlayer({
+    currentPlayList: biblioGeneral.songs,
+})
+
+console.log("Music Player", musicPlayer.currentPlayList)
+musicPlayer.reproductor()
