@@ -21,6 +21,10 @@ html {
   *, *:before, *:after {
     box-sizing: inherit !important;
   }
+
+audio{
+    display: none;
+}
 /* body{
     margin: 0;
 

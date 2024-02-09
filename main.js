@@ -129,6 +129,8 @@ const songs = [
     album: "Give yourself away",
     gender: "Christian rock",
     year: 2018,
+    urlSong: "./src/songs/stay.mp3"
+
 }),
     new Song({
     name: "This is home",
@@ -137,6 +139,8 @@ const songs = [
     album: "Chronicles of Narnia",
     gender: "Christian rock",
     year: 2008,
+    urlSong: "./src/songs/little_drummer_boy.mp3"
+
 }),
     new Song({
     name: "Somewhere only we know",
@@ -145,6 +149,8 @@ const songs = [
     album: "Hopes and fears",
     gender: "Rock",
     year: 2002,
+    urlSong: "./src/songs/letyourfaith.mp3"
+
 })]
 
 console.log(songs)
@@ -157,6 +163,7 @@ const letyourfaith = new Song({
     album: "Miracles",
     gender: "Christian rock",
     year: 2020,
+    urlSong: "./src/songs/letyourfaith.mp3"
 })
 /* Crear nuevos playlists */
 const biblioGeneral = new Playlist({
