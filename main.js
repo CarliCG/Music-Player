@@ -1,4 +1,4 @@
-class Song{
+class Cancion{
     constructor({name, artist, duration, album, gender, year, isFav = false, onPlayList = false, urlCover, urlSong}){
         this.name = name;
         this.artist = artist;
@@ -109,20 +109,20 @@ class Playlist{
     }
 }
 
-class MusicPlayer{
+/* class MusicPlayer{
     constructor({currentPlayList}){
         this.currentPlayList = currentPlayList;
-    }
+    } */
     /* Los métodos a crear acá se comunicarán con el HTMLAudioElement. 
     Cuando se de click en el music player, estos métodos invocarán a su vez los métodos propios del HTMLAudioElement, y se podrán reproducir las canciones*/
 
     /* Al parecer, el HTMLAudioElement solo admite 1 canción por vez. En tal caso, es necesario guardar la canción a la que le demos play en una variable, y eso enviarlo al objeto audio, y luego disparar la fx play */
-}
+
 
 
 /* Crear lista de nuevas canciones */
 const songs = [
-    new Song({
+    new Cancion({
     name: "Stay",
     artist: "Robbie Seay Band",
     duration: "05:00",
@@ -132,7 +132,7 @@ const songs = [
     urlSong: "./src/songs/stay.mp3"
 
 }),
-    new Song({
+    new Cancion({
     name: "This is home",
     artist: "Switchfoot",
     duration: "03:00",
@@ -142,7 +142,7 @@ const songs = [
     urlSong: "./src/songs/little_drummer_boy.mp3"
 
 }),
-    new Song({
+    new Cancion({
     name: "Somewhere only we know",
     artist: "Keane",
     duration: "02:50",
@@ -156,7 +156,7 @@ const songs = [
 console.log(songs)
 
 /* Crear nueva canción */
-const letyourfaith = new Song({
+const letyourfaith = new Cancion({
     name: "Let your faith be not alone",
     artist: "Robbie Seay Band",
     duration: "06:00",
@@ -174,14 +174,80 @@ const myPlaylist = new Playlist({
 })
 
 /* Agregar canciones al playlist */
-biblioGeneral.addSong(...songs)
-console.log(biblioGeneral.songs)
+/* biblioGeneral.addSong(...songs)
+console.log(biblioGeneral.songs) */
 /* Mostrar playlist en su container */
-biblioGeneral.renderList()
+/* biblioGeneral.renderList() */
 /* Ejecutar la búsqueda (lado izq) */
-biblioGeneral.searchBy(biblioGeneral.renderList)
+/* biblioGeneral.searchBy(biblioGeneral.renderList) */
 
 /* Agregar canción a playlistt */
-myPlaylist.addSong(letyourfaith),
+//myPlaylist.addSong(letyourfaith),
 /* Mostrar playlist en su container */
-myPlaylist.renderListBtn("My PlayList")
+//myPlaylist.renderListBtn("My PlayList")
+
+
+/* class Reproductor {
+    constructor (currentPlayList) {
+        
+        this.currentPlayList=currentPlayList
+
+    }
+
+    reproductor (){
+        // Obtener el botón play
+        const playButton = document.getElementById("play"); 
+    
+        // Event listener
+        
+        const audio= new Audio 
+        const songs= this.currentPlayList
+        audio.src= songs[0].urlSong
+        playButton.addEventListener('click', function() {
+            
+            console.log ("funca el click")
+            if (audio.paused==true) {
+                audio.play()
+            }
+        }
+        )
+    }
+    
+
+
+}
+
+const musicplayer=new Reproductor (songs)
+console.log (musicplayer.currentPlayList) */
+
+class Reproductor {
+    constructor(currentPlayList) {
+        this.currentPlayList = currentPlayList;
+    }
+
+    reproductor() {
+        // Obtener el botón play
+        const playButton = document.getElementById("play");
+
+        // Crear instancia de Audio
+        const audio = new Audio();
+
+        // Establecer la URL de la primera canción
+        const songs = this.currentPlayList;
+        audio.src = songs[0].urlSong;
+
+        // Event listener
+        playButton.addEventListener('click', function() {
+            console.log("Funciona el clic");
+            if (audio.paused == false) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+        });
+    }
+}
+
+const musicplayer = new Reproductor(songs);
+console.log(musicplayer.currentPlayList);
+
