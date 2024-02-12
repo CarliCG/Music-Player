@@ -1,3 +1,24 @@
+/* Validaciones conscernientes al Login */
+if(!localStorage.getItem('isLogged')){
+    window.location.href = "./login.html"
+    /* Si no estás loggeado, te redirige al login. No puedes acceder al Music player */
+}
+
+/* Para hacer log out... */
+const logoutBtn = document.getElementById('logout')
+logoutBtn.addEventListener('click', () => {
+    console.log("salir")
+    localStorage.removeItem('isLogged')
+    localStorage.removeItem('userName')
+    window.location.href = "./login.html"
+})
+
+/* Para mostrar el nombre de usuario en el navbar, una vez loggeado */
+let user = localStorage.getItem('userName')
+let userTitle = document.getElementById('userTitle')
+userTitle.innerText = user
+
+/* Definir clases */
 class Song{
     constructor({name, artist, duration, album, gender, year, isFav = false, onPlayList = false, urlCover, urlSong}){
         this.name = name;
@@ -123,6 +144,8 @@ class MusicPlayer{
         const prevSongButton = document.getElementById("prevSong");
         // Obtener el botón de next
         const nextSongButton = document.getElementById("nextSong");
+        // Obtener el botón Mute
+        const muteButton = document.getElementById("mute");
 
         // Crear instancia de Audio
         const audio = document.getElementById("audio");
@@ -170,6 +193,18 @@ class MusicPlayer{
             audio.src = songs[this.currentSongIndex].urlSong;
             audio.play();
          }.bind(this));
+
+        muteButton.addEventListener('click', function() {
+            if (audio.muted) {
+                audio.muted = false;
+                console.log("Muted false", songs[currentSong].name)
+                
+            } else {
+                audio.muted = true;
+                console.log("Muted true", songs[currentSong].name)
+
+            }
+        }.bind(this));
         }
     }
 
@@ -208,8 +243,8 @@ const songs = [
 }),
     new Song({
     name: "Let your faith be not alone",
-    artist: "Keane",
-    duration: "02:50",
+    artist: "Robbie Seay Band",
+    duration: "06:00",
     album: "Hopes and fears",
     gender: "Rock",
     year: 2002,

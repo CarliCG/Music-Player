@@ -20,6 +20,7 @@ const users = [
 const userInput = document.getElementById("user")
 const password = document.getElementById("password")
 const loginBtn = document.getElementById("login")
+const logoutBtn = document.getElementById('logout')
 
 
 loginBtn.addEventListener('click', (event) => {
@@ -37,3 +38,4 @@ loginBtn.addEventListener('click', (event) => {
 if(localStorage.getItem('isLogged')){
     window.location.href = "./reproductor.html"
 }
+
