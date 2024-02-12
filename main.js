@@ -1,3 +1,18 @@
+if(!localStorage.getItem('isLogged')){
+    window.location.href = "./login.html"
+    
+    const logoutBtn = document.getElementById('logout')
+    
+    logoutBtn.addEventListener('click', () => {
+        console.log("salir")
+        localStorage.removeItem('isLogged')
+        localStorage.removeItem('userName')
+        window.location.href = "./login.html"
+    })
+}
+
+
+
 class Song{
     constructor({name, artist, duration, album, gender, year, isFav = false, onPlayList = false, urlCover, urlSong}){
         this.name = name;
@@ -209,8 +224,8 @@ const songs = [
 }),
     new Song({
     name: "Let your faith be not alone",
-    artist: "Keane",
-    duration: "02:50",
+    artist: "Robbie Seay Band",
+    duration: "06:00",
     album: "Hopes and fears",
     gender: "Rock",
     year: 2002,

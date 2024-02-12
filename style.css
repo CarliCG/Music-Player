@@ -246,7 +246,7 @@ main{
 .reproductor .musicPlayer-cover .album-cover{
     height: 50vh;
     border-radius: 15px;
-    background-image: url(./src/img/keane_hopes_and_fears.jpg);
+    /* background-image: url(./src/img/keane_hopes_and_fears.jpg); */
     background-repeat: no-repeat;
     background-size: cover;
     /* background-position: 0 -50px; */
