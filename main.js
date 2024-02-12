@@ -1,17 +1,20 @@
 if(!localStorage.getItem('isLogged')){
     window.location.href = "./login.html"
     
-    const logoutBtn = document.getElementById('logout')
-    
-    logoutBtn.addEventListener('click', () => {
-        console.log("salir")
-        localStorage.removeItem('isLogged')
-        localStorage.removeItem('userName')
-        window.location.href = "./login.html"
-    })
 }
 
+const logoutBtn = document.getElementById('logout')
 
+logoutBtn.addEventListener('click', () => {
+    console.log("salir")
+    localStorage.removeItem('isLogged')
+    localStorage.removeItem('userName')
+    window.location.href = "./login.html"
+})
+
+let user = localStorage.getItem('userName')
+let userTitle = document.getElementById('userTitle')
+userTitle.innerText = user
 
 class Song{
     constructor({name, artist, duration, album, gender, year, isFav = false, onPlayList = false, urlCover, urlSong}){
