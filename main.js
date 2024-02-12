@@ -112,11 +112,18 @@ class Playlist{
 class MusicPlayer{
     constructor({currentPlayList = []}){
         this.currentPlayList = currentPlayList;
+        this.currentSongIndex = 0;
     }
 
     reproductor() {
         // Obtener el botón play
         const playButton = document.getElementById("play");
+        // Obtener el botón de stop
+        const stopButton = document.getElementById("stop");
+        // Obtener el botón de prev
+        const prevSongButton = document.getElementById("prevSong");
+        // Obtener el botón de next
+        const nextSongButton = document.getElementById("nextSong");
 
         // Crear instancia de Audio
         const audio = document.getElementById("audio");
@@ -135,12 +142,45 @@ class MusicPlayer{
                 audio.play();
             }
         });
+
+        //Event listener de los otros botones
+
+        stopButton.addEventListener('click', function () {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        prevSongButton.addEventListener('click', function () {
+            if (this.currentSongIndex > 0) {
+            this.currentSongIndex--;
+            } else {
+            this.currentSongIndex = songs.length - 1;
+            }
+
+            audio.src = songs[this.currentSongIndex].urlSong;
+            audio.play();
+        }.bind(this));
+
+        nextSongButton.addEventListener('click', function () {
+            if (this.currentSongIndex < songs.length - 1) {
+            this.currentSongIndex++;
+            } else {
+            this.currentSongIndex = 0;
+             }
+
+            audio.src = songs[this.currentSongIndex].urlSong;
+            audio.play();
+         }.bind(this));
+        }
     }
+
     /* Los métodos a crear acá se comunicarán con el HTMLAudioElement. 
     Cuando se de click en el music player, estos métodos invocarán a su vez los métodos propios del HTMLAudioElement, y se podrán reproducir las canciones*/
 
     /* Al parecer, el HTMLAudioElement solo admite 1 canción por vez. En tal caso, es necesario guardar la canción a la que le demos play en una variable, y eso enviarlo al objeto audio, y luego disparar la fx play */
-}
+    
+    //Voy a tratar de incluir los otros botones en la misma class de Music player
+    //No se pueden agregar dos constructores en la misma clase
 
 
 /* Crear lista de nuevas canciones */
