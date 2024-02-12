@@ -8,7 +8,6 @@ class Song{
         this.year = year;
         this.isFav = isFav;
         this.onPlayList = onPlayList;
-
         this.urlCover = urlCover;
         this.urlSong = urlSong;
     }

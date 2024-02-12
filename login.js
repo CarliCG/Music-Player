@@ -12,7 +12,7 @@ const users = [
         password: "nat"
     },
     {
-        name: "Nataly",
+        name: "Nathaly",
         password: "nathaly"
     }
 ]
