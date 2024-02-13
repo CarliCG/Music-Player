@@ -35,7 +35,7 @@ loginBtn.addEventListener('click', (event) => {
     }else alert("Usuario/Contraseña incorrecto(s)")
 })
 /* En caso de estar ya loggeado, se redirige siempre al usuario al Home */
-if(localStorage.getItem('isLogged')){
+if(localStorage.getItem('isLogged') === true){
     window.location.href = "./reproductor.html"
 }
 

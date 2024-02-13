@@ -1,5 +1,5 @@
 /* Validaciones conscernientes al Login */
-if(!localStorage.getItem('isLogged')){
+if(!localStorage.getItem('isLogged') !== true){
     window.location.href = "./login.html"
     /* Si no estás loggeado, te redirige al login. No puedes acceder al Music player */
 }
