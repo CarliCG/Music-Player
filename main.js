@@ -1,10 +1,12 @@
+setTimeout(() => {
 /* Validaciones conscernientes al Login */
-if(!localStorage.getItem('isLogged') !== true){
-    window.location.href = "./login.html"
+if(!localStorage.getItem('isLogged')){ 
+    console.log('no estas logeado', localStorage.getItem('isLogged'))
     /* Si no estás loggeado, te redirige al login. No puedes acceder al Music player */
 }
+}, 1000)
 
-/* Para hacer log out... */
+/* Para hacer log out... */ 
 const logoutBtn = document.getElementById('logout')
 logoutBtn.addEventListener('click', () => {
     console.log("salir")
@@ -195,7 +197,7 @@ class MusicPlayer{
             audio.play();
          }.bind(this));
 
-        muteButton.addEventListener('click', function() {
+         muteButton.addEventListener('click', function() {
             if (audio.muted) {
                 audio.muted = false;
                 console.log("Muted false", songs[currentSong].name)
