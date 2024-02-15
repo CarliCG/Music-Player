@@ -4,6 +4,7 @@ if(!localStorage.getItem('isLogged') !== true){
     /* Si no estás loggeado, te redirige al login. No puedes acceder al Music player */
 }
 
+
 /* Para hacer log out... */
 const logoutBtn = document.getElementById('logout')
 logoutBtn.addEventListener('click', () => {
@@ -29,6 +30,7 @@ class Song{
         this.year = year;
         this.isFav = isFav;
         this.onPlayList = onPlayList;
+
         this.urlCover = urlCover;
         this.urlSong = urlSong;
     }
@@ -225,7 +227,7 @@ const songs = [
     duration: "05:00",
     album: "Give yourself away",
     gender: "Christian rock",
-    year: 2018,
+    year: "2018",
     urlSong: "./src/songs/stay.mp3",
     urlCover: ".src/img/robbie_giveYourselfAway.jpg"
 
@@ -236,7 +238,7 @@ const songs = [
     duration: "03:00",
     album: "Chronicles of Narnia",
     gender: "Christian rock",
-    year: 2008,
+    year: "2008",
     urlSong: "./src/songs/this_is_home.mp3",
     urlCover: "./src/img/switchfoot_narnia.jpg"
 
@@ -247,11 +249,161 @@ const songs = [
     duration: "06:00",
     album: "Hopes and fears",
     gender: "Rock",
-    year: 2002,
+    year: "2002",
     urlSong: "./src/songs/letyourfaith.mp3",
     urlCover: "./src/img/robbie_miracle.jpg"
 
-})]
+}),
+
+new Song({
+    name: "Sweet Child o' Mine",
+    artist: "Guns N' Roses",
+    duration: "05:56",
+    album: "Appetite for Destruction",
+    gender: "Hard rock ",
+    year: "1987",
+    urlSong: "./src/songs/Guns_N_Roses_Sweet_Child_O_Mine.mp3",
+    urlCover: "./src/img/sweet_child_mine_guns_n_roses.jpeg"
+
+}),
+
+new Song({
+    name: "Livin' on a Prayer",
+    artist: "Bon Jovi",
+    duration: "04:11",
+    album: "Slippery When Wet",
+    gender: "Glam meta",
+    year: "1986",
+    urlSong: "./src/songs/Bon_Jovi_Livin_On_A_Prayer.mp3",
+    urlCover: "./src/img/livin_on_a_prayer_bon_jovi.jpg"
+
+}),
+
+new Song({
+    name: "Every Breath You Take",
+    artist: "The Police",
+    duration: "04:13",
+    album: "Synchronicity",
+    gender: "Pop rock",
+    year: "1983",
+    urlSong: "./src/songs/The_Police_Every_Breath_You_Take.mp3",
+    urlCover: "./src/img/every_breath_you_take_the_police.jpeg"
+
+}),
+
+new Song({
+    name: "With or Without You",
+    artist: "U2",
+    duration: "04:55",
+    album: "The Joshua Tree",
+    gender: "rock",
+    year: "1987",
+    urlSong: "./src/songs/U2_With_Or_Without_You.mp3",
+    urlCover: "./src/img/With_or_Without_You_U2.jpeg"
+
+}),
+
+new Song({
+    name: "Don't Stop Believin",
+    artist: "Journey ",
+    duration: "04:11",
+    album: "Escape",
+    gender: "rock",
+    year: "1981",
+    urlSong: "./src/songs/Journey_Dont_Stop_Believin.mp3",
+    urlCover: "./src/img/dont_stop_believin_journey.jpeg"
+
+}),
+
+new Song({
+    name: "Billie Jean",
+    artist: "Michael Jackson",
+    duration: "04:54",
+    album: "Thriller",
+    gender: "R&B",
+    year: "1982",
+    urlSong: "./src/songs/Michael_Jackson_Billie_Jean.mp3",
+    urlCover: "./src/img/billie_jean_michael_jackson.jpeg"
+
+}),
+
+
+new Song({
+    name: "Another One Bites the Dust",
+    artist: "Queen",
+    duration: "03:34",
+    album: "The Game",
+    gender: "rock",
+    year: "1980",
+    urlSong: "./src/songs/Queen_Another_One_Bites_The_Dust.mp3",
+    urlCover: "./src/img/another_one_bites_the_dust_queen.jpeg"
+
+}),
+
+new Song({
+    name: "Eye of the Tiger",
+    artist: "Survivor ",
+    duration: "04:03",
+    album: "Rocky III",
+    gender: "rock",
+    year: "1982",
+    urlSong: "./src/songs/Survivor_Eye_of_the_Tiger.mp3",
+    urlCover: "./src/img/eye_of_the_tiger_survivor.jpeg"
+
+}),
+
+new Song({
+    name: "Africa",
+    artist: "Toto",
+    duration: "04:55",
+    album: "Toto IV",
+    gender: "rock",
+    year: "1984",
+    urlSong: "./src/songs/Toto_Africa",
+    urlCover: "./src/img/africa_toto.jpeg"
+
+}),
+
+new Song({
+    name: "Take On Me",
+    artist: "a-ha",
+    duration: "03:45",
+    album: "Hunting High and Low",
+    gender: "Synth pop",
+    year: 1984,
+    urlSong: "./src/songs/a_ha_Take_On_Me.mp3",
+    urlCover: "./src/img/take_on_me_a-ha.jpeg"
+
+}),
+
+new Song({
+    name: "Summer of '69",
+    artist: "Bryan Adams",
+    duration: "03:32",
+    album: "Reckless",
+    gender: "pop rock",
+    year: "1984",
+    urlSong: "./src/songs/Bryan_Adams_Summer_Of_69.mp3",
+    urlCover: "./src/img/summer_of_69_bryan_adams.jpeg"
+
+}),
+
+new Song({
+    name: "Jump",
+    artist: "Van Halen",
+    duration: "03:59",
+    album: "1984",
+    gender: "rock",
+    year: "1984",
+    urlSong: "./src/songs/Van_Halen_Jump.mp3",
+    urlCover: "./src/img/Jump_van_halen.jpeg"
+
+}),
+
+
+
+
+]
 
 console.log(songs)
 

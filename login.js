@@ -13,7 +13,7 @@ const users = [
     },
     {
         name: "Nathaly",
-        password: "nathaly"
+        password: "Hsm199525"
     }
 ]
 
