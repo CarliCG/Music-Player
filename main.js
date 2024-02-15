@@ -6,12 +6,12 @@ if(!localStorage.getItem('isLogged')){
 }
 }, 1000)
 
-<<<<<<< HEAD
 
-/* Para hacer log out... */
-=======
-/* Para hacer log out... */ 
->>>>>>> e299738fb7a2f570619c58f8d18a35e99b2679e7
+
+
+
+
+
 const logoutBtn = document.getElementById('logout')
 logoutBtn.addEventListener('click', () => {
     console.log("salir")
