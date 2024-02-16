@@ -405,8 +405,171 @@ new Song({
     urlCover: "./src/img/Jump_van_halen.jpeg"
 
 }),
+new Song({
+    name: "The Final Countdown",
+    artist: "Europe",
+    year: "1986",
+    album: "The Final Countdown",
+    duration: "5:10",
+    gender: "Rock",
+    urlSong: "./src/songs/Europe - The Final Countdown (Official Video).mp3",
+    urlCover: "./src/img/Europe-the_final_countdown.jpg"
+}),
+
+new Song({
+    name: "I Love Rock 'n' Roll",
+    artist: "Joan Jett & the Blackhearts",
+    year: "1981",
+    album: "I Love Rock 'n' Roll",
+    duration: "2:55",
+    gender: "Rock",
+    urlSong: "./src/songs/Joan Jett & the Blackhearts - I Love Rock 'N Roll (Official Video).mp3",
+    urlCover: "src\img\I_love_rock_n'_roll_-_joan_jett_(album_cover).jpg"
+}),
+
+new Song({
+    name: "Hungry Like the Wolf",
+    artist: "Duran Duran",
+    year: "1982",
+    album: "Rio",
+    duration: "3:41",
+    gender: "New Wave",
+    urlSong: "./src/songs/Hungry Like the Wolf (Night Version) (2009 Remaster).mp3",
+    urlCover: "./src/img/Duran-Duran-Hungry-Like-The-W-14123.jpg"
+}),
+
+new Song({
+    name: "Don't You (Forget About Me)",
+    artist: "Simple Minds",
+    year: "1985",
+    album: "The Breakfast Club (Soundtrack)",
+    duration: "4:20",
+    gender: "New Wave",
+    urlSong: "./src/songs/Simple Minds - Don't You (Forget About Me)_CdqoNKCCt7A.mp3",
+    urlCover: "./src/img/Dont you forget about me.jpg"
+}),
+
+new Song({
+    name: "Under Pressure",
+    artist: "Queen & David Bowie",
+    year: "1981",
+    album: "",
+    duration: "4:04",
+    gender: "Rock",
+    urlSong: "./src/songs/Queen - Under Pressure (Official Video)_a01QQZyl-_I.mp3",
+    urlCover: "./src/img/800px-Queen_&_David_Bowie_-_Under_Pressure.jpeg"
+}),
+
+new Song({
+    name: "We Will Rock You",
+    artist: "Queen",
+    year: "1981",
+    album: "News of the World",
+    duration: "2:01",
+    gender: "Rock",
+    urlSong: "./src/songs/Queen - We Will Rock You (Official Video)_-tJYN-eG1zk.mp3",
+    urlCover: "./src/img/We_Will_Rock_You_by_Queen_(1977_French_single).png"
+}),
+
+new Song({
+    name: "Like a Virgin",
+    artist: "Madonna",
+    year: "1984",
+    album: "Like a Virgin",
+    duration: "3:11",
+    gender: "Pop",
+    urlSong: "./src/songs/Madonna - Like A Virgin (Official Video)_s__rX_WL100.mp3",
+    urlCover: "./src/img/LikeAVirgin1984.png"
+}),
+
+new Song({
+    name: "Walk Like an Egyptian",
+    artist: "The Bangles",
+    year: "1986",
+    album: "Different Light",
+    duration: "3:23",
+    gender: "Pop",
+    urlSong: "./src/songs/The Bangles - Walk Like an Egyptian (Official Video).mp3",
+    urlCover: "./src/img/The_Bangles_Walk_Like_An_Egyptian.jpg"
+}),
+
+new Song({
+    name: "Start Me Up",
+    artist: "The Rolling Stones",
+    year: "1981",
+    album: "Tattoo You",
+    duration: "3:32",
+    gender: "Rock",
+    urlSong: "./src/songs/Rolling Stones-start me up_ZzlgJ-SfKYE.mp3",
+    urlCover: "./src/img/RollStones-Single1981_StartMeUp.jpg"
+}),
+
+new Song({
+    name: "Beat It",
+    artist: "Michael Jackson",
+    year: "1983",
+    album: "Thriller",
+    duration: "4:18",
+    gender: "Pop",
+    urlSong: "./src/songs/Michael Jackson - Beat It (Official 4K Video).mp3",
+    urlCover: "./src/img/Beat_It.jpg"
+}),
+
+new Song({
+    name: "I Want to Know What Love Is",
+    artist: "Foreigner",
+    year: "1984",
+    album: "Agent Provocateur",
+    duration: "5:00",
+    gender: "Rock",
+    urlSong: "./src/songs/Foreigner - I Want To Know What Love Is (Official Music Video)_r3Pr1_v7hsw.mp3",
+    urlCover: "./src/img/Foreigner-I-Want-To-Know-Wh-297484.jpg"
+}),
+
+new Song({
+    name: "Welcome to the Jungle",
+    artist: "Guns N' Roses",
+    year: "1987",
+    album: "Appetite for Destruction",
+    duration: "4:34",
+    gender: "Rock",
+    urlSong: "./src/songs/Guns N' Roses - Welcome To The Jungle.mp3",
+    urlCover: "./src/img/Welcometothejungle.jpg"
+}),
+
+new Song({
+    name: "Every Rose Has Its Thorn",
+    artist: "Poison",
+    year: "1988",
+    album: "Open Up and Say... Ahh!",
+    duration: "4:20",
+    gender: "Rock",
+    urlSong: "./src/songs/Poison - Every Rose Has Its Thorn (Official Music Video).mp3",
+    urlCover: "./src/img/Every_Rose_Has_Its_Thorn-Cover.jpg"
+}),
+
+new Song({
+    name: "Everybody Wants to Rule the World",
+    artist: "Tears for Fears",
+    year: "1985",
+    album: "Songs from the Big Chair",
+    duration: "4:11",
+    gender: "New Wave",
+    urlSong: "./src/songs/Everybody Wants To Rule The World_awoFZaSuko4.mp3",
+    urlCover: "./src/img/Everybody_Wants_to_Rule_the_World.png" 
+}),
 
 
+new Song({
+    name: "Thriller",
+    artist: "Michael Jackson",
+    year: "1982",
+    album: "Thriller",
+    duration: "5:57",
+    gender: "Pop",
+    urlSong: "./src/songs/Michael Jackson - Thriller (Lyrics)_rLMr9CsJHME.mp3",
+    urlCover: "./src/img/Michael_Jackson_-_Thriller.png"
+}),
 
 
 ]
