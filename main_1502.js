@@ -200,16 +200,21 @@
             // Se asigna el url de la canción actual al objeto Audio
             audio.src = songs[this.currentSongIndex].urlSong;
             let currentSongIndex = this.currentSongIndex
-            // Al hacer click en Play...
+            // Al hacer click en Play... cambia el boton a stop y viceversa
             playButton.addEventListener('click', function() {
-                if (!audio.paused) {
-                    audio.pause();
-                } else {
+                if (audio.paused) {
                     audio.play();
+                    // Cambiar ícono a pausa
+                    playIcon.classList.remove('fa-circle-play');
+                    playIcon.classList.add('fa-pause-circle');
+                } else {
+                    audio.pause();
+                    // Cambiar ícono a play
+                    playIcon.classList.remove('fa-pause-circle');
+                    playIcon.classList.add('fa-circle-play');
                 }
-                console.log("funciona el click desde el reproductor")
-
-                });
+            });
+            
     
             //Event listener de los otros botones
             // Al hacer click en Stop...
