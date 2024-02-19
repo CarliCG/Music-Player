@@ -87,6 +87,7 @@
                     }else{
                         favIcon = "fa-regular fa-heart"
                     }
+
                     contenedor.innerHTML += `<li><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlistBtn${song.id}" class="${playListIcon}"></i><i id="favBtn${song.id}" class="${favIcon}"></i></li>`  
                 });
 
@@ -245,7 +246,46 @@
                 let currentTime = formatDuration(audio.currentTime)
             
                 timeShow.innerText = currentTime +'/'+ duration
+
+                if(duration == currentTime){
+                    if (currentSongIndex < songs.length - 1) {
+                        currentSongIndex++;
+                    } else {
+                        currentSongIndex = 0;
+                     }
+                    audio.pause();
+                    audio.src = songs[currentSongIndex].urlSong;
+                    audio.load();
+    
+                    audio.oncanplaythrough = function() {
+                        audio.play();
+                        audio.oncanplaythrough = null; 
+                    }
+                    console.log("Signt canción", currentSongIndex)
+                    generateMusicPlayer(songs[currentSongIndex])
+                }
             })
+
+            audio.addEventListener('ended', function(){
+                console.log("Presente canción", currentSongIndex)
+                if (currentSongIndex < songs.length - 1) {
+                    currentSongIndex++;
+                } else {
+                    currentSongIndex = 0;
+                 }
+                audio.pause();
+                audio.src = songs[currentSongIndex].urlSong;
+                audio.load();
+                audio.play();
+
+                audio.oncanplaythrough = function() {
+                    audio.play();
+                    audio.oncanplaythrough = null; 
+                }
+                console.log("Signt canción", currentSongIndex)
+                generateMusicPlayer(songs[currentSongIndex])
+            })
+
             // Al hacer click en Play... cambia el boton a stop y viceversa
             playButton.addEventListener('click', function() {
                 if (audio.paused) {
