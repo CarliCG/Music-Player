@@ -212,6 +212,15 @@
             // Se asigna el url de la canción actual al objeto Audio
             audio.src = songs[this.currentSongIndex].urlSong;
             let currentSongIndex = this.currentSongIndex
+
+            //Para mostrar el currentTime en tiempo real
+            audio.addEventListener('timeupdate', function(){
+                let duration = formatDuration(audio.duration)
+                let timeShow = document.querySelector("#cancion-duracion") 
+                let currentTime = formatDuration(audio.currentTime)
+            
+                timeShow.innerText = currentTime +'/'+ duration
+            })
             // Al hacer click en Play... cambia el boton a stop y viceversa
             playButton.addEventListener('click', function() {
                 if (audio.paused) {
@@ -226,7 +235,7 @@
                     playIcon.classList.add('fa-circle-play');
                 }
             });
-            
+        
     
             //Event listener de los otros botones
             // Al hacer click en Stop...
@@ -281,33 +290,57 @@
                 }
                 }/* .bind(this) */);
             }
+
+            
         }
 
-
+    
     // Esta fx está dedicada a generar el código html del UI del reproductor, y mostrar en él los datos de la canción que hemos seleccionado (la mitad superior, sobre los botones del music player)
+    
+    function formatDuration(duration) {
+        let minutes = Math.floor(duration / 60);
+        let seconds = Math.floor(duration % 60);
+    
+        // Asegurarse de que los minutos y los segundos siempre tengan dos dígitos
+        minutes = (minutes < 10) ? '0' + minutes : minutes;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+    
+        return minutes + ':' + seconds;
+    }
+
     function generateMusicPlayer(song){
         const musicPlayer_ui = document.querySelector(".musicPlayer-cover")
-        musicPlayer_ui.innerHTML = `
-        <div class="album-cover" style="background-image: url(${song.urlCover})"></div>
-        <div class="music-info-container">
-            <h3 class="cancion-titulo" id="cancion-titulo">${song.name}</h3>
-            <div class="cancion-info">
-                <div class="cancion-titulos">
-                    <p id="cancion-artista">${song.artist}</p>
-                    <p id="cancion-album">${song.album}</p>
-                </div>
-                <div class="cancion-duracion">
-                    <h3 id="cancion-duracion">${song.duration}</h3>
+
+        audio.addEventListener('loadedmetadata', function() {
+            let duration = audio.duration;
+            console.log(duration);
+
+            let songDuration = formatDuration(duration)
+            song.duration = songDuration
+            
+            musicPlayer_ui.innerHTML = `
+            <div class="album-cover" style="background-image: url(${song.urlCover})"></div>
+            <div class="music-info-container">
+                <h3 class="cancion-titulo" id="cancion-titulo">${song.name}</h3>
+                <div class="cancion-info">
+                    <div class="cancion-titulos">
+                        <p id="cancion-artista">${song.artist}</p>
+                        <p id="cancion-album">${song.album}</p>
+                    </div>
+                    <div class="cancion-duracion">
+                        <h3 id="cancion-duracion">${song.duration}</h3>
+                    </div>
                 </div>
             </div>
-        </div>
-        `
+            `
+        })
+
+
+        
     }
     
     // Al hacer click en c/canción, independientemente de su lista, se ejecutará esta función
     function changeCurrentSong(songId, currentPlayList){
-        
-        
         // Si ya se cuenta con un playlist en MusicPlayer, se reemplazará con el playlist al que pertenece la canción seleccionada
         if(musicPlayer.currentPlayList){
             musicPlayer.removePlayList()
@@ -761,9 +794,6 @@ document.querySelectorAll('#playlistBtn').forEach(item => {
                 myPlaylist.removeSong(songToAdd)
                 songToAdd.onPlayList = false
             }
-            
-            /* biblioGeneral.renderList() */
-            // Verifica si es la lista de Favoritos
         } 
         
         myPlaylist.renderList();
@@ -806,8 +836,8 @@ document.querySelectorAll('#favBtn').forEach(item => {
                 myFavorite.removeSong(songToAdd)
                 songToAdd.isFav = false
             }
-            console.log(songToAdd.isFav)
-            myFavorite.renderList();
+            /* console.log(songToAdd.isFav)
+            myFavorite.renderList(); */
             
         }
         myFavorite.renderList();
