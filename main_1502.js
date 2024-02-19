@@ -87,9 +87,34 @@
                     }else{
                         favIcon = "fa-regular fa-heart"
                     }
-                    contenedor.innerHTML += `<li  ><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlistBtn" class="${playListIcon}"></i><i id="favBtn" class="${favIcon}"></i>
-                    </li>`  
+                    contenedor.innerHTML += `<li><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlistBtn${song.id}" class="${playListIcon}"></i><i id="favBtn${song.id}" class="${favIcon}"></i></li>`  
                 });
+
+            lista.forEach(song => {
+                document.getElementById(`playlistBtn${song.id}`).addEventListener('click', () => {
+                    // Aquí va el código para añadir la canción a la lista de reproducción
+                    console.log("funciona")
+                    if(!song.onPlayList){
+                        myPlaylist.addSong(song);
+                        song.onPlayList = true;
+                    }else{
+                        myPlaylist.removeSong(song)
+                        song.onPlayList = false
+                    }
+                });
+                document.getElementById(`favBtn${song.id}`).addEventListener('click', () => {
+                    // Aquí va el código para añadir la canción a favoritos
+                    console.log("funciona")
+
+                    if(!song.isFav){
+                        myFavorite.addSong(song);
+                        song.isFav = true;
+                    }else{
+                        myFavorite.removeSong(song)
+                        song.isFav = false
+                    }
+                });
+            });
         };
         
     
@@ -781,7 +806,7 @@ myPlaylistBtn.addEventListener('click', () => {
 }); */
 
 //Agrego la funcionalidad del botón de + para agregar a My Playlist y Favoritos las canciones
-document.querySelectorAll('#playlistBtn').forEach(item => {
+/* document.querySelectorAll('#playlistBtn').forEach(item => {
     item.addEventListener('click', () => {
         const songId = parseInt(item.previousElementSibling.getAttribute('data-idSong'));
         const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
@@ -799,21 +824,10 @@ document.querySelectorAll('#playlistBtn').forEach(item => {
         myPlaylist.renderList();
         myFavorite.renderList();
         console.log('funciona el botón My Playlist')
-        /* else if (myFavorite.container.includes('3')) { 
-            if(!songToAdd.isFav){
-                myFavorite.addSong(songToAdd);
-                songToAdd.isFav = true;
-            }else{
-                myFavorite.removeSong(songToAdd)
-                songToAdd.isFav = false
-            }
-            console.log(songToAdd.isFav)
-            myFavorite.renderList();
-            
-        } */
+        
         
     });
-});
+}); */
 
 //Funcionalidad boton Favoritos
 /* const favoritosBtn = document.getElementById('favoritosBtn');
@@ -823,7 +837,7 @@ favoritosBtn.addEventListener('click', () => {
 });  */
 
 // Agrego la funcionalidad de los corazones para agregar a Favoritos las canciones
-document.querySelectorAll('#favBtn').forEach(item => {
+/* document.querySelectorAll('#favBtn').forEach(item => {
     item.addEventListener('click', () => {
         const songId = parseInt(item.parentElement.querySelector('.cancion').getAttribute('data-idSong'));
         const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
@@ -836,12 +850,11 @@ document.querySelectorAll('#favBtn').forEach(item => {
                 myFavorite.removeSong(songToAdd)
                 songToAdd.isFav = false
             }
-            /* console.log(songToAdd.isFav)
-            myFavorite.renderList(); */
+            
             
         }
         myFavorite.renderList();
         myPlaylist.renderList();
         console.log('funciona el botón Favoritos')
     });
-});
+}); */
