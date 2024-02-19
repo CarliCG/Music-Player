@@ -63,7 +63,7 @@
             const index = this.songs.indexOf(song);
             if (index === -1) return // Esto indica que no encontró la canción
             this.songs.splice(index, 1) // Si existe la canción, se borra usando su posición(index), solo ese elemento ('1')
-            this.renderList(idContainer); // Por c/vez que eliminemos una nueva canción a la lista, el html que muestra la lista se actualiza, y se muestra todo menos la canción borrada
+            this.renderList(); 
         }
     
         
@@ -74,7 +74,7 @@
             lista.forEach(
                 song => {
                     contenedor.innerHTML += `<li onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' ><h3 class="cancion" data-idSong=${song.id}>${song.name}</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
-                    </li>`  // Aquí hará falta validar si song.isFav = true (y así), varíen los botones de favorito, playlist...
+                    </li>`  
                 });
         };
         
@@ -300,8 +300,7 @@
         }
         musicPlayer.addPlayList(...currentPlayList)
 
-        //console.log("Lo que supuestamente tiene music player",musicPlayer.currentPlayList)
-
+        
         // Para renderizar la canción seleccionada en el UI del reproductor...
         // 1. Usamos el id de la canción para localizarla en la playlist cargada en el MusicPlayer
         const song = musicPlayer.currentPlayList.find(s => s.id === songId);
@@ -327,18 +326,7 @@
     });
     /* Crear lista de nuevas canciones */
     const songs = [
-        new Song({
-            
-            name: "Stay",
-            artist: "Robbie Seay Band",
-            duration: "05:00",
-            album: "Give yourself away",
-            gender: "Christian rock",
-            year: "2018",
-            urlSong: "./src/songs/stay.mp3",
-            urlCover: ".src/img/robbie_giveYourselfAway.jpg"
-    
-        }),
+        
         new Song({
             
             name: "This is home",
@@ -461,7 +449,18 @@
             urlCover: "./src/img/eye_of_the_tiger_survivor.jpeg"
     
         }),
+        new Song({
+            
+            name: "Stay",
+            artist: "Robbie Seay Band",
+            duration: "05:00",
+            album: "Give yourself away",
+            gender: "Christian rock",
+            year: "2018",
+            urlSong: "./src/songs/stay.mp3",
+            urlCover: ".src/img/robbie_giveYourselfAway.jpg"
     
+        }),
         new Song({
             name: "Africa",
             artist: "Toto",

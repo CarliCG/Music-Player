@@ -201,14 +201,26 @@ main{
         cursor: pointer;
     }
 }
+.bibliotecaGeneral{
+    min-height: 450px;
+    height: 300px;
+    
 
-.bibliotecaGeneral .biblio-lista-container, .listas .biblio-lista-container-2 {
-    min-height: 350px;
-    height: 350px;
+}
+.biblio-lista-container, 
+.listas .biblio-lista-container, 
+.lista-general-3 {
+    min-height: 150px;
+    height: 100px;
     overflow-y: scroll;
 
 }
-
+.bibliotecaGeneral .biblio-lista-container .lista-general, 
+.listas .biblio-lista-container .lista-general-2, 
+.lista-general-3 {
+    padding: 8px; 
+    height: auto; /* O la altura que desees */
+}
 /* .listas .bc-2{
     display: grid;
     grid-template-rows: repeat(2, 1fr);
