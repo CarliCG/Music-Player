@@ -295,7 +295,7 @@
     // Al hacer click en c/canción, independientemente de su lista, se ejecutará esta función
     function changeCurrentSong(songId, currentPlayList){
         
-        console.log("Lista a music player", currentPlayList)
+        
         // Si ya se cuenta con un playlist en MusicPlayer, se reemplazará con el playlist al que pertenece la canción seleccionada
         if(musicPlayer.currentPlayList){
             musicPlayer.removePlayList()
@@ -321,7 +321,12 @@
         musicPlayer.playFromList()
         
     }
-
+    document.querySelectorAll('.cancion').forEach(cancion => {
+        cancion.addEventListener('click', () => {
+            const songId = parseInt(cancion.getAttribute('data-idSong'));
+            changeCurrentSong(songId, biblioGeneral.songs);
+        });
+    });
     /* Crear lista de nuevas canciones */
     const songs = [
         new Song({
@@ -716,8 +721,24 @@ const myPlaylist = new Playlist({
     myPlaylist.addSong(cancionAdd)
     myPlaylist.songs[0].onPlayList=true
     /* Mostrar playlist en su container */
-    myPlaylist.renderList()
-    /* Cargar, mostrar y controlar la 1era canción de la playlist por defecto */
-    musicPlayer.renderMusicPlayer()
+    // Mostrar playlist en su container
+myPlaylist.renderList()
+// Cargar, mostrar y controlar la 1era canción de la playlist por defecto
+musicPlayer.renderMusicPlayer()
+
+document.querySelectorAll('.fa-solid.fa-plus').forEach(item => {
+    item.addEventListener('click', () => {
+        // Obtener el ID de la canción a agregar (puedes obtenerlo del atributo data-idSong del elemento HTML)
+        const songId = parseInt(item.previousElementSibling.getAttribute('data-idSong'));
+        // Buscar la canción en la lista general
+        const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
+        // Agregar la canción a My PlayList
+        myPlaylist.addSong(songToAdd);
+        // Indicar que la canción está en la playlist
+        songToAdd.onPlayList = true;
+        // Actualizar la visualización de la lista
+        myPlaylist.renderList();
+    });
+});
     
 
