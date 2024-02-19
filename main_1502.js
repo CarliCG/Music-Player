@@ -73,21 +73,21 @@
             contenedor.innerHTML = "";
             lista.forEach(
                 song => {
-                    /* let favIcon = ""
-                    let playListIcon = ""  */
+                    let favIcon = ""
+                    let playListIcon = "" 
 
-                    /* if(song.onPlayList){
-                        playListIcon = "bi bi-dash-lg"
+                    if(song.onPlayList){
+                        playListIcon = "fa fa-minus-circle"
                     }else{
                         playListIcon = "fa-solid fa-plus"
                     }
 
                     if(song.isFav){
-                        favIcon = "bi bi-heart-fill"
+                        favIcon = "fa fa-heart"
                     }else{
                         favIcon = "fa-regular fa-heart"
-                    } */
-                    contenedor.innerHTML += `<li  ><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
+                    }
+                    contenedor.innerHTML += `<li  ><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlistBtn" class="${playListIcon}"></i><i id="favBtn" class="${favIcon}"></i>
                     </li>`  
                 });
         };
@@ -339,6 +339,7 @@
 
             console.log("Mostrar evento",e) //Por lo pronto no muestra nada
             e.target.classList.add("onPlay")
+            // Parece que todo este querySelector no funciona
         });
     });
     /* Crear lista de nuevas canciones */
@@ -734,21 +735,20 @@ const myFavorite=new Playlist({
     
 
     
-myPlaylist.renderList()
+/* myPlaylist.renderList() */
 // Cargar, mostrar y controlar la 1era canción de la playlist por defecto
 musicPlayer.renderMusicPlayer()
 
 
 //Funcionalidad boton My Playlist
-const myPlaylistBtn = document.getElementById('myPlaylistBtn');
+/* const myPlaylistBtn = document.getElementById('myPlaylistBtn');
 myPlaylistBtn.addEventListener('click', () => {
     myPlaylist.renderList();
     console.log('funciona el botón My Playlist')
-});
-
+}); */
 
 //Agrego la funcionalidad del botón de + para agregar a My Playlist y Favoritos las canciones
-document.querySelectorAll('.fa-solid.fa-plus').forEach(item => {
+document.querySelectorAll('#playlistBtn').forEach(item => {
     item.addEventListener('click', () => {
         const songId = parseInt(item.previousElementSibling.getAttribute('data-idSong'));
         const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
@@ -761,12 +761,15 @@ document.querySelectorAll('.fa-solid.fa-plus').forEach(item => {
                 myPlaylist.removeSong(songToAdd)
                 songToAdd.onPlayList = false
             }
-            console.log(songToAdd.onPlayList)
-            myPlaylist.renderList();
-            console.log('funciona el botón My Playlist')
             
+            /* biblioGeneral.renderList() */
             // Verifica si es la lista de Favoritos
-        } /* else if (myFavorite.container.includes('3')) { 
+        } 
+        
+        myPlaylist.renderList();
+        myFavorite.renderList();
+        console.log('funciona el botón My Playlist')
+        /* else if (myFavorite.container.includes('3')) { 
             if(!songToAdd.isFav){
                 myFavorite.addSong(songToAdd);
                 songToAdd.isFav = true;
@@ -778,6 +781,7 @@ document.querySelectorAll('.fa-solid.fa-plus').forEach(item => {
             myFavorite.renderList();
             
         } */
+        
     });
 });
 
@@ -789,7 +793,7 @@ favoritosBtn.addEventListener('click', () => {
 });  */
 
 // Agrego la funcionalidad de los corazones para agregar a Favoritos las canciones
-document.querySelectorAll('.fa-regular.fa-heart').forEach(item => {
+document.querySelectorAll('#favBtn').forEach(item => {
     item.addEventListener('click', () => {
         const songId = parseInt(item.parentElement.querySelector('.cancion').getAttribute('data-idSong'));
         const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
@@ -807,6 +811,7 @@ document.querySelectorAll('.fa-regular.fa-heart').forEach(item => {
             
         }
         myFavorite.renderList();
+        myPlaylist.renderList();
         console.log('funciona el botón Favoritos')
     });
 });
