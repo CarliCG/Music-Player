@@ -73,7 +73,21 @@
             contenedor.innerHTML = "";
             lista.forEach(
                 song => {
-                    contenedor.innerHTML += `<li onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' ><h3 class="cancion" data-idSong=${song.id}>${song.name}</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
+                    /* let favIcon = ""
+                    let playListIcon = ""  */
+
+                    /* if(song.onPlayList){
+                        playListIcon = "bi bi-dash-lg"
+                    }else{
+                        playListIcon = "fa-solid fa-plus"
+                    }
+
+                    if(song.isFav){
+                        favIcon = "bi bi-heart-fill"
+                    }else{
+                        favIcon = "fa-regular fa-heart"
+                    } */
+                    contenedor.innerHTML += `<li  ><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i class="fa-solid fa-plus"></i><i class="fa-regular fa-heart"></i>
                     </li>`  
                 });
         };
@@ -319,9 +333,12 @@
         
     }
     document.querySelectorAll('.cancion').forEach(cancion => {
-        cancion.addEventListener('click', () => {
+        cancion.addEventListener('click', (e) => {
             const songId = parseInt(cancion.getAttribute('data-idSong'));
             changeCurrentSong(songId, biblioGeneral.songs);
+
+            console.log("Mostrar evento",e) //Por lo pronto no muestra nada
+            e.target.classList.add("onPlay")
         });
     });
     /* Crear lista de nuevas canciones */
@@ -525,7 +542,7 @@
             duration: "2:55",
             gender: "Rock",
             urlSong: "./src/songs/Joan Jett & the Blackhearts - I Love Rock N Roll (Official Video).mp3",
-            urlCover: "src\img\I_love_rock_n_roll_-_joan_jett_(album_cover).jpg"
+            urlCover: "src\img\i_love_rock_n_roll.jpg"
         }),
     
         new Song({
@@ -547,7 +564,7 @@
             duration: "4:20",
             gender: "New Wave",
             urlSong: "./src/songs/Simple Minds - Dont You (Forget About Me)_CdqoNKCCt7A.mp3",
-            urlCover: "./src/img/Dont you forget about me.jpg"
+            urlCover: "./src/img/Dont_you_forget_about_me.jpg"
         }),
     
         new Song({
@@ -701,7 +718,7 @@ const myFavorite=new Playlist({
     listName:'My Favorite',
     container: 'lista-general-3'//Lista de canciones favoritas.
 })
-    /* Agregar canciones al playlist */
+    /* Agregar canciones al playlist general */
     biblioGeneral.addSong(...songs)
    // console.log(biblioGeneral.songs)
     /* Mostrar playlist en su container */
@@ -737,23 +754,39 @@ document.querySelectorAll('.fa-solid.fa-plus').forEach(item => {
         const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
 
         if (myPlaylist.container.includes('2')) { // Verifica si es la lista de My Playlist
-            myPlaylist.addSong(songToAdd);
-            songToAdd.onPlayList = true;
+            if(!songToAdd.onPlayList){
+                myPlaylist.addSong(songToAdd);
+                songToAdd.onPlayList = true;
+            }else{
+                myPlaylist.removeSong(songToAdd)
+                songToAdd.onPlayList = false
+            }
+            console.log(songToAdd.onPlayList)
             myPlaylist.renderList();
-        } else if (myFavorite.container.includes('3')) { // Verifica si es la lista de Favoritos
-            myFavorite.addSong(songToAdd);
-            songToAdd.isFav = true;
+            console.log('funciona el botón My Playlist')
+            
+            // Verifica si es la lista de Favoritos
+        } /* else if (myFavorite.container.includes('3')) { 
+            if(!songToAdd.isFav){
+                myFavorite.addSong(songToAdd);
+                songToAdd.isFav = true;
+            }else{
+                myFavorite.removeSong(songToAdd)
+                songToAdd.isFav = false
+            }
+            console.log(songToAdd.isFav)
             myFavorite.renderList();
-        }
+            
+        } */
     });
 });
 
 //Funcionalidad boton Favoritos
-const favoritosBtn = document.getElementById('favoritosBtn');
+/* const favoritosBtn = document.getElementById('favoritosBtn');
 favoritosBtn.addEventListener('click', () => {
     myFavorite.renderList();
     console.log('funciona el botón Favoritos')
-}); 
+});  */
 
 // Agrego la funcionalidad de los corazones para agregar a Favoritos las canciones
 document.querySelectorAll('.fa-regular.fa-heart').forEach(item => {
@@ -761,8 +794,19 @@ document.querySelectorAll('.fa-regular.fa-heart').forEach(item => {
         const songId = parseInt(item.parentElement.querySelector('.cancion').getAttribute('data-idSong'));
         const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
 
-        myFavorite.addSong(songToAdd);
-        songToAdd.isFav = true;
+        if (myFavorite.container.includes('3')) { 
+            if(!songToAdd.isFav){
+                myFavorite.addSong(songToAdd);
+                songToAdd.isFav = true;
+            }else{
+                myFavorite.removeSong(songToAdd)
+                songToAdd.isFav = false
+            }
+            console.log(songToAdd.isFav)
+            myFavorite.renderList();
+            
+        }
         myFavorite.renderList();
+        console.log('funciona el botón Favoritos')
     });
 });

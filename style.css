@@ -221,13 +221,10 @@ main{
     padding: 8px; 
     height: auto; /* O la altura que desees */
 }
-/* .listas .bc-2{
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-} */
-/* .listas .biblio-lista-container .bl-2{
-    align-self: end;
-} */
+
+.onPlay{
+    background-color: #605ea3;
+}
 
 .reproductor{
     grid-area: musicPlayer;
