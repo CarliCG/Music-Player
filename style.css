@@ -180,16 +180,16 @@ main{
     border-radius: 18px;
     margin-top: 15px;
 }
-.bibliotecaGeneral .biblio-lista-container .lista-general, .listas .biblio-lista-container .lista-general-2{
+.bibliotecaGeneral .biblio-lista-container .lista-general, .listas .biblio-lista-container .lista-general-2,.lista-general-3 {
     padding: 8px;
-    height: 350px;
+    height: 150px;
 
     /* li:hover{
         background-color: #75709b;
         border-radius: 30px;
     } */
 }
-.bibliotecaGeneral .biblio-lista-container .lista-general li, .listas .biblio-lista-container .lista-general-2 li{
+.bibliotecaGeneral .biblio-lista-container .lista-general li, .listas .biblio-lista-container .lista-general-2 li, .lista-general-3 li{
     display: grid;
     grid-template-columns: 5fr 1fr 1fr;
     margin: 1rem;
@@ -202,7 +202,7 @@ main{
     }
 }
 
-.bibliotecaGeneral .biblio-lista-container, .listas .biblio-lista-container-2{
+.bibliotecaGeneral .biblio-lista-container, .listas .biblio-lista-container-2 {
     min-height: 350px;
     height: 350px;
     overflow-y: scroll;

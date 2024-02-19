@@ -9,24 +9,22 @@
 </head>
 <body>
     <header id="header">
-<!--         <div id="header-contenedor" > -->
         <a href="./reproductor.html" style="align-self: center;">
             <div class="izq" id="izquierda">
                 <h1>Bento Music</h1>
             </div>
         </a>
-            <div class="der" id="derecha">
-                <h2 id="userTitle">Usuario</h2>
-                <a id="logout" class="logout" href="#">
-                    <i  class="fa-solid fa-power-off"></i>&nbsp;<span>Log Out</span>
-                </a>
-            </div>
-<!--         </div> -->
+        <div class="der" id="derecha">
+            <h2 id="userTitle">Usuario</h2>
+            <a id="logout" class="logout" href="#">
+                <i class="fa-solid fa-power-off"></i>&nbsp;<span>Log Out</span>
+            </a>
+        </div>
     </header>
     <main>
         <section class="bibliotecaGeneral">
             <div class="buscador-container">
-                <input id="input-buscador" class="buscador"  type="text" placeholder="Busca tu cancion">
+                <input id="input-buscador" class="buscador" type="text" placeholder="Busca tu cancion">
                 <i id="buscar" class="fa-solid fa-magnifying-glass"></i>
             </div>
     
@@ -58,7 +56,7 @@
                 </div>
             </div>
             <div class="musicPlayer-botones">
-                <audio id="audio" preload=”metadata” loop></audio>
+                <audio id="audio" preload="metadata" loop></audio>
                 <div class="sonido">
                     <i id="mute" class="fa-solid fa-volume-xmark fa-2x"></i>
                 </div>
@@ -75,12 +73,11 @@
         <section class="listas">
             <div class="listas-botones">
                 <div>
-                    <button type="button">Mi PlayList</button>
+                    <button id="myPlaylistBtn" type="button">Mi PlayList</button>
                 </div>
                 <div>
-                    <button type="button">Favoritos</button>
+                    <button id="favoritosBtn" type="button">Favoritos</button>
                 </div>
-
             </div>
             <div class="biblio-container bc-2">
                 <h2 class="biblio-titulo" id="biblio-titulo">
@@ -88,38 +85,28 @@
                 </h2>
                 <div class="biblio-lista-container">
                     <ul class="lista-general-2" id="lista-general-2"> 
-                        <li> <h3>Cancion</h3><i class="fa-regular fa-heart"></i><i class="fa-solid fa-trash"></i></i>
-                        </li>
-                        <li> <h3>Cancion</h3><i class="fa-regular fa-heart"></i><i class="fa-solid fa-trash"></i></i>
-                        </li>
-                        <li> <h3>Cancion</h3><i class="fa-regular fa-heart"></i><i class="fa-solid fa-trash"></i></i>
-                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="biblio-container bc-3">
+                <h2 class="biblio-titulo" id="biblio-titulo">
+                    Favoritos
+                </h2>
+                <div class="biblio-lista-container">
+                    <ul class="lista-general-3" id="lista-general-3"> 
                     </ul>
                 </div>
             </div>
         </section>
-
     </main>
     <footer id="idFooter">
-            <div class="">
-                <p class="">© Bento Music  2024 - All rights reserved.</p>
-            </div>
-            <div id="">
-                <p class="">Powered by Almeida, Campaña , Sandoya y Uvidia</p>
-            </div>
+        <div>
+            <p>© Bento Music 2024 - All rights reserved.</p>
+        </div>
+        <div>
+            <p>Powered by Almeida, Campaña, Sandoya y Uvidia</p>
         </div>
     </footer>
     <script src="./main_1502.js" defer></script>
-<!--     <script src="./login.js"></script> -->
 </body>
 </html>
-
-
-
-
-
-
-<!-- <audio id="audio" controls>
-    Tu navegador no soporta el elemento de audio.
-</audio> -->
-

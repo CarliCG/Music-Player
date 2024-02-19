@@ -68,8 +68,6 @@
     
         
         renderList(lista = this.songs, container = this.container){
-            console.log("container", container)
-            console.log(lista)
             let contenedor = document.getElementById(container);
             /* Muestra todas las canciones de la lista en cuestión */
             contenedor.innerHTML = "";
@@ -167,13 +165,13 @@
                     audio.play();
                     audio.oncanplaythrough = null; // Elimina el evento después de reproducir 
                 }
-                console.log("Tenemos:",musicPlayer)
+               // console.log("Tenemos:",musicPlayer)
 
             }else{
                 audio.pause()
             }
 
-            console.log("funciona el play from list")
+         
             // Se reinicia el controlador para seguir trabajando
             this.reproductor()
         }
@@ -195,7 +193,7 @@
 
             const songs = this.currentPlayList
                        
-            console.log("Lista a reproducir en verdad", songs)
+           // console.log("Lista a reproducir en verdad", songs)
 
             // Se asigna el url de la canción actual al objeto Audio
             audio.src = songs[this.currentSongIndex].urlSong;
@@ -302,7 +300,7 @@
         }
         musicPlayer.addPlayList(...currentPlayList)
 
-        console.log("Lo que supuestamente tiene music player",musicPlayer.currentPlayList)
+        //console.log("Lo que supuestamente tiene music player",musicPlayer.currentPlayList)
 
         // Para renderizar la canción seleccionada en el UI del reproductor...
         // 1. Usamos el id de la canción para localizarla en la playlist cargada en el MusicPlayer
@@ -310,12 +308,12 @@
         // 2. Obtenemos el index de la canción en dicha playlist
         musicPlayer.setCurrentSong(musicPlayer.currentPlayList.indexOf(song))
         
-        console.log("Supuesto id", musicPlayer.currentSongIndex)
-        console.log("Supuesto music player", musicPlayer)
+       // console.log("Supuesto id", musicPlayer.currentSongIndex)
+        //console.log("Supuesto music player", musicPlayer)
 
         // 3. Seteamos los datos de la canción en el url del objeto Audio
         audio.src = song.urlSong
-        console.log("Supuesto url",audio.src)
+       // console.log("Supuesto url",audio.src)
         // 4. Reiniciamos el UI del reproductor, para que cargue, muestre y controle la canción que hemos seleccionado
         musicPlayer.renderMusicPlayer()
         musicPlayer.playFromList()
@@ -330,7 +328,7 @@
     /* Crear lista de nuevas canciones */
     const songs = [
         new Song({
-            id: 0,
+            
             name: "Stay",
             artist: "Robbie Seay Band",
             duration: "05:00",
@@ -342,7 +340,7 @@
     
         }),
         new Song({
-            id: 1,
+            
             name: "This is home",
             artist: "Switchfoot",
             duration: "03:00",
@@ -354,7 +352,7 @@
     
         }),
             new Song({
-            id: 2,
+            
             name: "Let your faith be not alone",
             artist: "Robbie Seay Band",
             duration: "06:00",
@@ -367,7 +365,7 @@
         }),
     
         new Song({
-            id: 3,
+            
             name: "Sweet Child o Mine",
             artist: "Guns N Roses",
             duration: "05:56",
@@ -694,16 +692,19 @@ addID(songs) // Listo :D
 // Crear PlayLists
 const biblioGeneral = new Playlist({
     listName: "Biblioteca General",
-    container: "lista-general" // Sus canciones se mostrarán en...
+    container: "lista-general" // lista de canciones generales
 })
 const myPlaylist = new Playlist({
     listName: "My PlayList",
-    container: "lista-general-2" // Sus canciones se mostrarán en...
+    container: "lista-general-2" // lista de canciones con like.
 })
-
+const myFavorite=new Playlist({
+    listName:'My Favorite',
+    container: 'lista-general-3'//Lista de canciones favoritas.
+})
     /* Agregar canciones al playlist */
     biblioGeneral.addSong(...songs)
-    console.log(biblioGeneral.songs)
+   // console.log(biblioGeneral.songs)
     /* Mostrar playlist en su container */
     biblioGeneral.renderList()
     /* Crear instancia Music Player */
@@ -716,29 +717,53 @@ const myPlaylist = new Playlist({
     biblioGeneral.searchBy(biblioGeneral.renderList)
     
 
-    let cancionAdd = biblioGeneral.songs[1]
-    /* Agregar canción a playlistt */
-    myPlaylist.addSong(cancionAdd)
-    myPlaylist.songs[0].onPlayList=true
-    /* Mostrar playlist en su container */
-    // Mostrar playlist en su container
+    
 myPlaylist.renderList()
 // Cargar, mostrar y controlar la 1era canción de la playlist por defecto
 musicPlayer.renderMusicPlayer()
 
+
+//Funcionalidad boton My Playlist
+const myPlaylistBtn = document.getElementById('myPlaylistBtn');
+myPlaylistBtn.addEventListener('click', () => {
+    myPlaylist.renderList();
+    console.log('funciona el botón My Playlist')
+});
+
+
+//Agrego la funcionalidad del botón de + para agregar a My Playlist y Favoritos las canciones
 document.querySelectorAll('.fa-solid.fa-plus').forEach(item => {
     item.addEventListener('click', () => {
-        // Obtener el ID de la canción a agregar (puedes obtenerlo del atributo data-idSong del elemento HTML)
         const songId = parseInt(item.previousElementSibling.getAttribute('data-idSong'));
-        // Buscar la canción en la lista general
         const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
-        // Agregar la canción a My PlayList
-        myPlaylist.addSong(songToAdd);
-        // Indicar que la canción está en la playlist
-        songToAdd.onPlayList = true;
-        // Actualizar la visualización de la lista
-        myPlaylist.renderList();
+
+        if (myPlaylist.container.includes('2')) { // Verifica si es la lista de My Playlist
+            myPlaylist.addSong(songToAdd);
+            songToAdd.onPlayList = true;
+            myPlaylist.renderList();
+        } else if (myFavorite.container.includes('3')) { // Verifica si es la lista de Favoritos
+            myFavorite.addSong(songToAdd);
+            songToAdd.isFav = true;
+            myFavorite.renderList();
+        }
     });
 });
-    
 
+//Funcionalidad boton Favoritos
+const favoritosBtn = document.getElementById('favoritosBtn');
+favoritosBtn.addEventListener('click', () => {
+    myFavorite.renderList();
+    console.log('funciona el botón Favoritos')
+}); 
+
+// Agrego la funcionalidad de los corazones para agregar a Favoritos las canciones
+document.querySelectorAll('.fa-regular.fa-heart').forEach(item => {
+    item.addEventListener('click', () => {
+        const songId = parseInt(item.parentElement.querySelector('.cancion').getAttribute('data-idSong'));
+        const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
+
+        myFavorite.addSong(songToAdd);
+        songToAdd.isFav = true;
+        myFavorite.renderList();
+    });
+});
