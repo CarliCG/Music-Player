@@ -99,9 +99,10 @@
                         myPlaylist.addSong(song);
                         song.onPlayList = true;
                     }else{
-                        myPlaylist.removeSong(song)
                         song.onPlayList = false
+                        myPlaylist.removeSong(song)
                     }
+                    myPlaylist.renderList()
                 });
                 document.getElementById(`favBtn${song.id}`).addEventListener('click', () => {
                     // Aquí va el código para añadir la canción a favoritos
@@ -111,9 +112,10 @@
                         myFavorite.addSong(song);
                         song.isFav = true;
                     }else{
-                        myFavorite.removeSong(song)
                         song.isFav = false
+                        myFavorite.removeSong(song)
                     }
+                    myFavorite.renderList()
                 });
             });
         };
@@ -205,7 +207,6 @@
                     audio.play();
                     audio.oncanplaythrough = null; // Elimina el evento después de reproducir 
                 }
-               // console.log("Tenemos:",musicPlayer)
 
             }else{
                 audio.pause()
@@ -247,7 +248,11 @@
             
                 timeShow.innerText = currentTime +'/'+ duration
 
-                if(duration == currentTime){
+                
+
+                /* if(duration == currentTime){
+                    console.log("Presente canción", currentSongIndex)
+
                     if (currentSongIndex < songs.length - 1) {
                         currentSongIndex++;
                     } else {
@@ -263,28 +268,29 @@
                     }
                     console.log("Signt canción", currentSongIndex)
                     generateMusicPlayer(songs[currentSongIndex])
-                }
+                } */
             })
 
-            audio.addEventListener('ended', function(){
-                console.log("Presente canción", currentSongIndex)
-                if (currentSongIndex < songs.length - 1) {
-                    currentSongIndex++;
-                } else {
-                    currentSongIndex = 0;
-                 }
-                audio.pause();
-                audio.src = songs[currentSongIndex].urlSong;
-                audio.load();
-                audio.play();
+            audio.addEventListener('ended', changeAudio);
 
-                audio.oncanplaythrough = function() {
+            function changeAudio() {
+                if (!audio.src) {
+                    audio.src = songs[currentSongIndex];
                     audio.play();
-                    audio.oncanplaythrough = null; 
+                    console.log("no funcionó")
+                } else {
+                    if (index === songs.length - 1) {
+                        index = 0;
+                    } else {
+                        index++
+                    }
+                    audio.src = songs[currentSongIndex];
+                    audio.play()
+                    console.log("funcionó")
                 }
-                console.log("Signt canción", currentSongIndex)
-                generateMusicPlayer(songs[currentSongIndex])
-            })
+
+            }
+
 
             // Al hacer click en Play... cambia el boton a stop y viceversa
             playButton.addEventListener('click', function() {
@@ -347,11 +353,11 @@
              muteButton.addEventListener('click', function() {
                 if (audio.muted) {
                     audio.muted = false;
-                    console.log("Muted false", songs[currentSongIndex].name)
+                    
                     
                 } else {
                     audio.muted = true;
-                    console.log("Muted true", songs[currentSongIndex].name)
+                    
                 }
                 }/* .bind(this) */);
             }
@@ -360,7 +366,7 @@
         }
 
     
-    // Esta fx está dedicada a generar el código html del UI del reproductor, y mostrar en él los datos de la canción que hemos seleccionado (la mitad superior, sobre los botones del music player)
+    
     
     function formatDuration(duration) {
         let minutes = Math.floor(duration / 60);
@@ -373,6 +379,7 @@
         return minutes + ':' + seconds;
     }
 
+    // Esta fx está dedicada a generar el código html del UI del reproductor, y mostrar en él los datos de la canción que hemos seleccionado (la mitad superior, sobre los botones del music player)
     function generateMusicPlayer(song){
         const musicPlayer_ui = document.querySelector(".musicPlayer-cover")
 
@@ -430,7 +437,7 @@
         musicPlayer.playFromList()
         
     }
-    document.querySelectorAll('.cancion').forEach(cancion => {
+   /*  document.querySelectorAll('.cancion').forEach(cancion => {
         cancion.addEventListener('click', (e) => {
             const songId = parseInt(cancion.getAttribute('data-idSong'));
             changeCurrentSong(songId, biblioGeneral.songs);
@@ -439,7 +446,7 @@
             e.target.classList.add("onPlay")
             // Parece que todo este querySelector no funciona
         });
-    });
+    }); */
     /* Crear lista de nuevas canciones */
     const songs = [
         
