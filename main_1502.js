@@ -1,12 +1,4 @@
-/* Validaciones conscernientes al Login */
-/* setTimeout(() => {
-    if(!localStorage.getItem('isLogged')){ 
-        console.log('no estas logeado', localStorage.getItem('isLogged'))
-    }
-}, 1000) */
-/* Si no estás loggeado, te redirige al login. No puedes acceder al Music player */
-    
-    /* Para hacer log out... */ 
+
     const logoutBtn = document.getElementById('logout')
     logoutBtn.addEventListener('click', () => {
         console.log("salir")
@@ -61,9 +53,12 @@
         }
         removeSong(song){
             const index = this.songs.indexOf(song);
-            if (index === -1) return // Esto indica que no encontró la canción
-            this.songs.splice(index, 1) // Si existe la canción, se borra usando su posición(index), solo ese elemento ('1')
-            this.renderList(); 
+            if (index === -1) return; // Si no se encuentra la canción, salir
+        
+            this.songs.splice(index, 1); // Eliminar la canción de la lista personalizada
+        
+            // Vuelve a renderizar la lista personalizada
+            this.renderList(this.songs, this.container); 
         }
     
         
@@ -88,6 +83,7 @@
                         favIcon = "fa-regular fa-heart"
                     }
                     contenedor.innerHTML += `<li><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlistBtn${song.id}" class="${playListIcon}"></i><i id="favBtn${song.id}" class="${favIcon}"></i></li>`  
+                
                 });
 
             lista.forEach(song => {
@@ -796,65 +792,3 @@ const myFavorite=new Playlist({
 /* myPlaylist.renderList() */
 // Cargar, mostrar y controlar la 1era canción de la playlist por defecto
 musicPlayer.renderMusicPlayer()
-
-
-//Funcionalidad boton My Playlist
-/* const myPlaylistBtn = document.getElementById('myPlaylistBtn');
-myPlaylistBtn.addEventListener('click', () => {
-    myPlaylist.renderList();
-    console.log('funciona el botón My Playlist')
-}); */
-
-//Agrego la funcionalidad del botón de + para agregar a My Playlist y Favoritos las canciones
-/* document.querySelectorAll('#playlistBtn').forEach(item => {
-    item.addEventListener('click', () => {
-        const songId = parseInt(item.previousElementSibling.getAttribute('data-idSong'));
-        const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
-
-        if (myPlaylist.container.includes('2')) { // Verifica si es la lista de My Playlist
-            if(!songToAdd.onPlayList){
-                myPlaylist.addSong(songToAdd);
-                songToAdd.onPlayList = true;
-            }else{
-                myPlaylist.removeSong(songToAdd)
-                songToAdd.onPlayList = false
-            }
-        } 
-        
-        myPlaylist.renderList();
-        myFavorite.renderList();
-        console.log('funciona el botón My Playlist')
-        
-        
-    });
-}); */
-
-//Funcionalidad boton Favoritos
-/* const favoritosBtn = document.getElementById('favoritosBtn');
-favoritosBtn.addEventListener('click', () => {
-    myFavorite.renderList();
-    console.log('funciona el botón Favoritos')
-});  */
-
-// Agrego la funcionalidad de los corazones para agregar a Favoritos las canciones
-/* document.querySelectorAll('#favBtn').forEach(item => {
-    item.addEventListener('click', () => {
-        const songId = parseInt(item.parentElement.querySelector('.cancion').getAttribute('data-idSong'));
-        const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
-
-        if (myFavorite.container.includes('3')) { 
-            if(!songToAdd.isFav){
-                myFavorite.addSong(songToAdd);
-                songToAdd.isFav = true;
-            }else{
-                myFavorite.removeSong(songToAdd)
-                songToAdd.isFav = false
-            }
-            
-            
-        }
-        myFavorite.renderList();
-        myPlaylist.renderList();
-        console.log('funciona el botón Favoritos')
-    });
-}); */
