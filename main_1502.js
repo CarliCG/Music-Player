@@ -275,19 +275,18 @@
 
             function changeAudio() {
                 if (!audio.src) {
-                    audio.src = songs[currentSongIndex];
+                    audio.src = songs[currentSongIndex].urlSong;
                     audio.play();
-                    console.log("no funcionó")
                 } else {
-                    if (index === songs.length - 1) {
-                        index = 0;
+                    if (currentSongIndex === songs.length - 1) {
+                        currentSongIndex = 0;
                     } else {
-                        index++
+                        currentSongIndex++
                     }
-                    audio.src = songs[currentSongIndex];
+                    audio.src = songs[currentSongIndex].urlSong;
                     audio.play()
-                    console.log("funcionó")
                 }
+                generateMusicPlayer(songs[currentSongIndex])
 
             }
 
