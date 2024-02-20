@@ -1,4 +1,12 @@
-
+/* Validaciones conscernientes al Login */
+/* setTimeout(() => {
+    if(!localStorage.getItem('isLogged')){ 
+        console.log('no estas logeado', localStorage.getItem('isLogged'))
+    }
+}, 1000) */
+/* Si no estás loggeado, te redirige al login. No puedes acceder al Music player */
+    
+    /* Para hacer log out... */ 
     const logoutBtn = document.getElementById('logout')
     logoutBtn.addEventListener('click', () => {
         console.log("salir")
@@ -40,127 +48,133 @@
         // Añadir los métodos que faltan, por c/atributo de la clase
     }
     
-    class Playlist{
-        constructor({listName, container, songs = []}){
+    class Playlist {
+        constructor({ listName, container, songs = [] }) {
             this.listName = listName;
             this.container = container;
             this.songs = songs;
         }
     
-        addSong(...song){
-            this.songs.push(...song)
-            this.renderList()// Por c/vez que agreguemos una nueva canción a la lista, el html que muestra la lista se actualiza, y se muestra todo menos la canción borrada
-        }
-        removeSong(song){
-            const index = this.songs.indexOf(song);
-            if (index === -1) return; // Si no se encuentra la canción, salir
-        
-            this.songs.splice(index, 1); // Eliminar la canción de la lista personalizada
-        
-            // Vuelve a renderizar la lista personalizada
-            this.renderList(this.songs, this.container); 
+        addSong(...song) {
+            this.songs.push(...song);
+            this.renderList(); // Actualiza la representación visual de la lista
         }
     
-        
-        renderList(lista = this.songs, container = this.container){
+        removeSong(song) {
+            const index = this.songs.indexOf(song);
+            if (index === -1) return; // No se encontró la canción en la lista
+    
+            const wasPlaying = song.id === musicPlayer.currentPlayList[musicPlayer.currentSongIndex].id;
+    
+            // Elimina la canción del arreglo de canciones
+            this.songs.splice(index, 1);
+    
+            // Actualiza la lista de reproducción actual en el reproductor de música si es necesario
+            if (wasPlaying) {
+                musicPlayer.currentPlayList = this.songs;
+                // Si la canción eliminada estaba reproduciéndose, detén la reproducción y avanza a la siguiente canción si es necesario
+                musicPlayer.playFromList();
+            }
+    
+            // Renderiza la lista actualizada
+            this.renderList();
+        }
+    
+        renderList(lista = this.songs, container = this.container, listName = this.listName) {
             let contenedor = document.getElementById(container);
             /* Muestra todas las canciones de la lista en cuestión */
             contenedor.innerHTML = "";
+            console.log("resultados búsqueda", lista);
             lista.forEach(
                 song => {
-                    let favIcon = ""
-                    let playListIcon = "" 
-
-                    if(song.onPlayList){
-                        playListIcon = "fa fa-minus-circle"
-                    }else{
-                        playListIcon = "fa-solid fa-plus"
+                    let favIcon = "";
+                    let playListIcon = "";
+    
+                    if (song.onPlayList) {
+                        playListIcon = "fa fa-minus-circle"; // icono +
+                    } else {
+                        playListIcon = "fa-solid fa-plus"; // icono -
                     }
-
-                    if(song.isFav){
-                        favIcon = "fa fa-heart"
-                    }else{
-                        favIcon = "fa-regular fa-heart"
+    
+                    if (song.isFav) {
+                        favIcon = "fa fa-heart"; // icono añadir
+                    } else {
+                        favIcon = "fa-regular fa-heart"; // icono quitar
                     }
-                    contenedor.innerHTML += `<li><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlistBtn${song.id}" class="${playListIcon}"></i><i id="favBtn${song.id}" class="${favIcon}"></i></li>`  
-                
+    
+                    contenedor.innerHTML += `<li><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlist${song.id}${listName}"  class="${playListIcon}"></i><i  id="favs${song.id}${listName}" class="${favIcon}"></i></li>`;
                 });
-
+    
             lista.forEach(song => {
-                document.getElementById(`playlistBtn${song.id}`).addEventListener('click', () => {
+                document.getElementById(`playlist${song.id}${listName}`).addEventListener('click', () => {
                     // Aquí va el código para añadir la canción a la lista de reproducción
-                    console.log("funciona")
-                    if(!song.onPlayList){
+                    if (!song.onPlayList) {
                         myPlaylist.addSong(song);
                         song.onPlayList = true;
-                    }else{
-                        myPlaylist.removeSong(song)
-                        song.onPlayList = false
+                    } else {
+                        song.onPlayList = false;
+                        myPlaylist.removeSong(song);
                     }
+                    biblioGeneral.renderList();
+                    myFavorite.renderList();
+                    myPlaylist.renderList();
                 });
-                document.getElementById(`favBtn${song.id}`).addEventListener('click', () => {
+                document.getElementById(`favs${song.id}${listName}`).addEventListener('click', () => {
                     // Aquí va el código para añadir la canción a favoritos
-                    console.log("funciona")
-
-                    if(!song.isFav){
+                    if (!song.isFav) {
                         myFavorite.addSong(song);
                         song.isFav = true;
-                    }else{
-                        myFavorite.removeSong(song)
-                        song.isFav = false
+                    } else {
+                        song.isFav = false;
+                        myFavorite.removeSong(song);
                     }
+                    biblioGeneral.renderList();
+                    myPlaylist.renderList();
+                    myFavorite.renderList();
                 });
             });
         };
-        
     
-        // Añadir un método que nos permita renderizar las listas de Fav y My Playlist según el botón al que demos click
-        // Ahora que lo pienso, tal vez haga falta tener c/una en contenedores diferentes, para evitar problemas durante la revisión de proyecto (sorry)
-
-        // También hace falta una fx que nos permita añadir y quitar a Favs y MyPlaylist (ya existe el método removeSong), y cambiar según eso los íconos de las canciones (usar los atributos isFav y onList de la clase Song, cambiar sus valores c/vez que demos click en los respectivos botones)
-    
-        // Método Buscar (por canción, artista, álbum, género)
-        searchBy(met, listaCanciones = this.songs){
+        searchBy(met = this.renderList(), listaCanciones = this.songs) {
             // Captura la barra de input donde ingresamos la canción a buscar
-            const buscador = document.getElementById("input-buscador")
+            const buscador = document.getElementById("input-buscador");
             listaCanciones = this.songs;
             // Buscamos según el valor de ese input
             buscar();
     
-            function buscar (){
-                                        //evento   fx
-                buscador.addEventListener('input', function() {
+            function buscar() {
+                //evento   fx
+                buscador.addEventListener('input', function () {
                     let input = this.value;
                     /* Regex */
                     let expresion = new RegExp(input, "i");
                     /* Función para comparar input con array */
                     const inputResultado = comparar(listaCanciones, expresion);
-                    /* console.log(inputResultado) */
-        
-                    let tituloBusqueda= document.getElementById("biblio-titulo");
-                    if(!this.value){
+    
+                    let tituloBusqueda = document.getElementById("biblio-titulo");
+                    if (!this.value) {
                         tituloBusqueda.textContent = "Biblioteca General";
-                    }else{
+                    } else {
                         tituloBusqueda.textContent = "Resultados de la búsqueda:";
                     }
                     // Muestra los resultados en la sección izquierda, y retorna los mismos 
-                    met(inputResultado, "lista-general")
-                    return(inputResultado, "lista-general")
+                    met(inputResultado, "lista-general", biblioGeneral.listName);
+                    return (inputResultado, "lista-general");
                 });
             }
-            
+    
             // Todos los filtros aplicados al input para hallar coincidencias están aquí
-            function comparar(lista, expresion){
+            function comparar(lista, expresion) {
                 let resultadoCancion = lista.filter(
                     // Song: canción de c/iteración
                     song => expresion.test(song.name) || expresion.test(song.artist) || expresion.test(song.album) || expresion.test(song.gender)// Hay alguna coincidencia entre 'song' y la regex?
                     // Si la r// es True, el return (implícito) será la presente canción
                 );
-                return(resultadoCancion)
-            
+                return (resultadoCancion);
             }
         }
     }
+    
 
 
     class MusicPlayer{
@@ -200,7 +214,6 @@
                     audio.play();
                     audio.oncanplaythrough = null; // Elimina el evento después de reproducir 
                 }
-               // console.log("Tenemos:",musicPlayer)
 
             }else{
                 audio.pause()
@@ -241,7 +254,50 @@
                 let currentTime = formatDuration(audio.currentTime)
             
                 timeShow.innerText = currentTime +'/'+ duration
+
+                
+
+                /* if(duration == currentTime){
+                    console.log("Presente canción", currentSongIndex)
+
+                    if (currentSongIndex < songs.length - 1) {
+                        currentSongIndex++;
+                    } else {
+                        currentSongIndex = 0;
+                     }
+                    audio.pause();
+                    audio.src = songs[currentSongIndex].urlSong;
+                    audio.load();
+    
+                    audio.oncanplaythrough = function() {
+                        audio.play();
+                        audio.oncanplaythrough = null; 
+                    }
+                    console.log("Signt canción", currentSongIndex)
+                    generateMusicPlayer(songs[currentSongIndex])
+                } */
             })
+
+            audio.addEventListener('ended', changeAudio);
+
+            function changeAudio() {
+                if (!audio.src) {
+                    audio.src = songs[currentSongIndex].urlSong;
+                    audio.play();
+                } else {
+                    if (currentSongIndex === songs.length - 1) {
+                        currentSongIndex = 0;
+                    } else {
+                        currentSongIndex++
+                    }
+                    audio.src = songs[currentSongIndex].urlSong;
+                    audio.play()
+                }
+                generateMusicPlayer(songs[currentSongIndex])
+
+            }
+
+
             // Al hacer click en Play... cambia el boton a stop y viceversa
             playButton.addEventListener('click', function() {
                 if (audio.paused) {
@@ -303,11 +359,11 @@
              muteButton.addEventListener('click', function() {
                 if (audio.muted) {
                     audio.muted = false;
-                    console.log("Muted false", songs[currentSongIndex].name)
+                    
                     
                 } else {
                     audio.muted = true;
-                    console.log("Muted true", songs[currentSongIndex].name)
+                    
                 }
                 }/* .bind(this) */);
             }
@@ -316,7 +372,7 @@
         }
 
     
-    // Esta fx está dedicada a generar el código html del UI del reproductor, y mostrar en él los datos de la canción que hemos seleccionado (la mitad superior, sobre los botones del music player)
+    
     
     function formatDuration(duration) {
         let minutes = Math.floor(duration / 60);
@@ -329,6 +385,7 @@
         return minutes + ':' + seconds;
     }
 
+    // Esta fx está dedicada a generar el código html del UI del reproductor, y mostrar en él los datos de la canción que hemos seleccionado (la mitad superior, sobre los botones del music player)
     function generateMusicPlayer(song){
         const musicPlayer_ui = document.querySelector(".musicPlayer-cover")
 
@@ -355,9 +412,6 @@
             </div>
             `
         })
-
-
-        
     }
     
     // Al hacer click en c/canción, independientemente de su lista, se ejecutará esta función
@@ -374,28 +428,14 @@
         const song = musicPlayer.currentPlayList.find(s => s.id === songId);
         // 2. Obtenemos el index de la canción en dicha playlist
         musicPlayer.setCurrentSong(musicPlayer.currentPlayList.indexOf(song))
-        
-       // console.log("Supuesto id", musicPlayer.currentSongIndex)
-        //console.log("Supuesto music player", musicPlayer)
-
         // 3. Seteamos los datos de la canción en el url del objeto Audio
         audio.src = song.urlSong
-       // console.log("Supuesto url",audio.src)
         // 4. Reiniciamos el UI del reproductor, para que cargue, muestre y controle la canción que hemos seleccionado
         musicPlayer.renderMusicPlayer()
         musicPlayer.playFromList()
         
     }
-    document.querySelectorAll('.cancion').forEach(cancion => {
-        cancion.addEventListener('click', (e) => {
-            const songId = parseInt(cancion.getAttribute('data-idSong'));
-            changeCurrentSong(songId, biblioGeneral.songs);
 
-            console.log("Mostrar evento",e) //Por lo pronto no muestra nada
-            e.target.classList.add("onPlay")
-            // Parece que todo este querySelector no funciona
-        });
-    });
     /* Crear lista de nuevas canciones */
     const songs = [
         
@@ -530,7 +570,7 @@
             gender: "Christian rock",
             year: "2018",
             urlSong: "./src/songs/stay.mp3",
-            urlCover: ".src/img/robbie_giveYourselfAway.jpg"
+            urlCover: "./src/img/robbie_give_yourself_away.jpg"
     
         }),
         new Song({
@@ -597,7 +637,7 @@
             duration: "2:55",
             gender: "Rock",
             urlSong: "./src/songs/Joan Jett & the Blackhearts - I Love Rock N Roll (Official Video).mp3",
-            urlCover: "src\img\i_love_rock_n_roll.jpg"
+            urlCover: "src/img/i_love_rock_n_roll.jpg"
         }),
     
         new Song({
@@ -641,7 +681,7 @@
             duration: "2:01",
             gender: "Rock",
             urlSong: "./src/songs/Queen - We Will Rock You (Official Video)_-tJYN-eG1zk.mp3",
-            urlCover: "./src/img/We_Will_Rock_You_by_Queen_(1977_French_single).png"
+            urlCover: "./src/img/We_Will_Rock_You.png"
         }),
     
         new Song({
@@ -769,7 +809,7 @@ const myPlaylist = new Playlist({
     listName: "My PlayList",
     container: "lista-general-2" // lista de canciones con like.
 })
-const myFavorite=new Playlist({
+const myFavorite = new Playlist({
     listName:'My Favorite',
     container: 'lista-general-3'//Lista de canciones favoritas.
 })
@@ -787,8 +827,5 @@ const myFavorite=new Playlist({
     /* Ejecutar la búsqueda (lado izq) */
     biblioGeneral.searchBy(biblioGeneral.renderList)
     
-
-    
-/* myPlaylist.renderList() */
-// Cargar, mostrar y controlar la 1era canción de la playlist por defecto
-musicPlayer.renderMusicPlayer()
+    // Cargar, mostrar y controlar la 1era canción de la playlist por defecto
+    musicPlayer.renderMusicPlayer()
