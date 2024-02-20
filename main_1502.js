@@ -20,6 +20,9 @@
     let userTitle = document.getElementById('userTitle')
     userTitle.innerText = user
     
+    const audio = document.getElementById("audio");
+
+
     /* Definir clases */
     class Song{
         constructor({id, name, artist, duration, album, gender, year, isFav = false, onPlayList = false, urlCover, urlSong}){
@@ -58,19 +61,22 @@
         addSong(...song){
             this.songs.push(...song)
             this.renderList()// Por c/vez que agreguemos una nueva canción a la lista, el html que muestra la lista se actualiza, y se muestra todo menos la canción borrada
+
+            
         }
         removeSong(song){
             const index = this.songs.indexOf(song);
             if (index === -1) return // Esto indica que no encontró la canción
             this.songs.splice(index, 1) // Si existe la canción, se borra usando su posición(index), solo ese elemento ('1')
             this.renderList(); 
+            
         }
         
         renderList(lista = this.songs, container = this.container, listName = this.listName){
             let contenedor = document.getElementById(container);
             /* Muestra todas las canciones de la lista en cuestión */
             contenedor.innerHTML = "";
-            console.log("resultados búsqueda", lista)
+            /* console.log("resultados búsqueda", lista) */
             lista.forEach(
                 song => {
                     let favIcon = ""
@@ -104,6 +110,13 @@
                     biblioGeneral.renderList()
                     myFavorite.renderList()
                     myPlaylist.renderList()
+
+                    if(musicPlayer.currentPlayList){
+                        musicPlayer.removePlayList()
+                    }
+                    musicPlayer.addPlayList(...myPlaylist.songs)
+                    console.log("Deberian quedar:",myPlaylist.songs)
+                    console.log("En realidad están en music player", musicPlayer.currentPlayList)
                 });
                 document.getElementById(`favs${song.id}${listName}`).addEventListener('click', () => {
                     // Aquí va el código para añadir la canción a favoritos
@@ -117,16 +130,17 @@
                     biblioGeneral.renderList()
                     myPlaylist.renderList()
                     myFavorite.renderList()
+
+                    if(musicPlayer.currentPlayList){
+                        musicPlayer.removePlayList()
+                    }
+                    musicPlayer.addPlayList(...myFavorite.songs)
+                    console.log("Deberian quedar:",myFavorite.songs)
+                    console.log("En realidad están en music player", musicPlayer.currentPlayList)
                 });
             });
         };
         
-    
-        // Añadir un método que nos permita renderizar las listas de Fav y My Playlist según el botón al que demos click
-        // Ahora que lo pienso, tal vez haga falta tener c/una en contenedores diferentes, para evitar problemas durante la revisión de proyecto (sorry)
-
-        // También hace falta una fx que nos permita añadir y quitar a Favs y MyPlaylist (ya existe el método removeSong), y cambiar según eso los íconos de las canciones (usar los atributos isFav y onList de la clase Song, cambiar sus valores c/vez que demos click en los respectivos botones)
-    
         // Método Buscar (por canción, artista, álbum, género)
         searchBy(met = this.renderList(), listaCanciones = this.songs){
             // Captura la barra de input donde ingresamos la canción a buscar
@@ -178,6 +192,7 @@
         // Se carga playlist al MusicPlayer. De esa forma, podremos navegarla con los botones
         addPlayList(...songs){
             this.currentPlayList.push(...songs)
+            
         }
         // Elimina la playlist actual cada vez que sea necesario cargar una nueva
         removePlayList(){
@@ -198,7 +213,7 @@
         }
         // Esta función se ejecuta cuando hacemos click en una canción, independientemente de su lista, para reproducirla
         playFromList(){
-            const audio = document.getElementById("audio");
+            /* const audio = document.getElementById("audio"); */
             // Está planteado de esta forma para que no hayan conflictos al reproducir y luego pausar, hacer stop, o navegar la lista
             if(this.currentSongIndex !== undefined){
                 audio.pause()
@@ -211,114 +226,61 @@
             }else{
                 audio.pause()
             }
-
-         
             // Se reinicia el controlador para seguir trabajando
             this.reproductor()
         }
-
-        reproductor() {
-            // Obtener el botón play
-            const playButton = document.getElementById("play");
-            // Obtener el botón de stop
-            const stopButton = document.getElementById("stop");
-            // Obtener el botón de prev
-            const prevSongButton = document.getElementById("prevSong");
-            // Obtener el botón de next
-            const nextSongButton = document.getElementById("nextSong");
-            // Obtener el botón Mute
-            const muteButton = document.getElementById("mute");
-    
-            // Crear instancia de Audio
-            const audio = document.getElementById("audio");
-
-            const songs = this.currentPlayList
-                       
-           // console.log("Lista a reproducir en verdad", songs)
-
-            // Se asigna el url de la canción actual al objeto Audio
-            audio.src = songs[this.currentSongIndex].urlSong;
-            let currentSongIndex = this.currentSongIndex
-
-            //Para mostrar el currentTime en tiempo real
-            audio.addEventListener('timeupdate', function(){
-                let duration = formatDuration(audio.duration)
-                let timeShow = document.querySelector("#cancion-duracion") 
-                let currentTime = formatDuration(audio.currentTime)
-            
-                timeShow.innerText = currentTime +'/'+ duration
-
-                
-
-                /* if(duration == currentTime){
-                    console.log("Presente canción", currentSongIndex)
-
-                    if (currentSongIndex < songs.length - 1) {
-                        currentSongIndex++;
-                    } else {
-                        currentSongIndex = 0;
-                     }
-                    audio.pause();
-                    audio.src = songs[currentSongIndex].urlSong;
-                    audio.load();
-    
-                    audio.oncanplaythrough = function() {
-                        audio.play();
-                        audio.oncanplaythrough = null; 
-                    }
-                    console.log("Signt canción", currentSongIndex)
-                    generateMusicPlayer(songs[currentSongIndex])
-                } */
-            })
-
-            audio.addEventListener('ended', changeAudio);
-
-            function changeAudio() {
-                if (!audio.src) {
-                    audio.src = songs[currentSongIndex].urlSong;
-                    audio.play();
-                } else {
-                    if (currentSongIndex === songs.length - 1) {
-                        currentSongIndex = 0;
-                    } else {
-                        currentSongIndex++
-                    }
-                    audio.src = songs[currentSongIndex].urlSong;
-                    audio.play()
-                }
-                generateMusicPlayer(songs[currentSongIndex])
-
-            }
-
-
-            // Al hacer click en Play... cambia el boton a stop y viceversa
-            playButton.addEventListener('click', function() {
-                if (audio.paused) {
-                    audio.play();
-                    // Cambiar ícono a pausa
-                    playIcon.classList.remove('fa-circle-play');
-                    playIcon.classList.add('fa-pause-circle');
-                } else {
-                    audio.pause();
-                    // Cambiar ícono a play
-                    playIcon.classList.remove('fa-pause-circle');
-                    playIcon.classList.add('fa-circle-play');
-                }
-            });
         
-    
-            //Event listener de los otros botones
-            // Al hacer click en Stop...
-            stopButton.addEventListener('click', function () {
-                audio.pause();
-                audio.currentTime = 0;
-                });
-            // Al hacer click en Previous 
-            prevSongButton.addEventListener('click', function () {
-                if (currentSongIndex > 0) {
-                    currentSongIndex--;
+        
+        reproductor(songs = this.currentPlayList) {
+        // Obtener el botón play
+        const playButton = document.getElementById("play");
+        // Obtener el botón de stop
+        const stopButton = document.getElementById("stop");
+        // Obtener el botón de prev
+        const prevSongButton = document.getElementById("prevSong");
+        // Obtener el botón de next
+        const nextSongButton = document.getElementById("nextSong");
+        // Obtener el botón Mute
+        const muteButton = document.getElementById("mute");
+
+        // Crear instancia de Audio
+       
+                    
+        // console.log("Lista a reproducir en verdad", songs)
+
+        // Se asigna el url de la canción actual al objeto Audio
+        audio.src = songs[this.currentSongIndex].urlSong;
+        let currentSongIndex = this.currentSongIndex;
+
+        
+
+        //Para mostrar el currentTime en tiempo real
+        audio.addEventListener('timeupdate', function(){
+            let duration = formatDuration(audio.duration)
+            let timeShow = document.querySelector("#cancion-duracion") 
+            let currentTime = formatDuration(audio.currentTime)
+        
+            timeShow.innerText = currentTime +'/'+ duration
+
+        })
+
+        audio.addEventListener('ended', changeAudio);
+
+        function changeAudio() {
+            /* if(!musicPlayer.currentPlayList){
+                musicPlayer.currentPlayList = biblioGeneral.songs;
+                musicPlayer.currentSongIndex = 0;
+            } */
+            songs = musicPlayer.currentPlayList;
+
+            if (!audio.src) {
+                audio.src = songs[currentSongIndex].urlSong;
+                audio.play();
+            } else {
+                if (currentSongIndex === songs.length - 1) {
+                    currentSongIndex = 0;
                 } else {
-                    currentSongIndex = songs.length - 1;
+                    currentSongIndex++
                 }
                 audio.pause();
                 audio.src = songs[currentSongIndex].urlSong;
@@ -327,46 +289,87 @@
                     audio.play();
                     audio.oncanplaythrough = null; // Elimina el evento después de reproducir 
                 }
-                // Es necesario generar nuevamente la UI, para que se muestre la nueva canción
-                generateMusicPlayer(songs[currentSongIndex])
-                }/* .bind(this) */);
-            
-            // Al hacer click en Next...
-            nextSongButton.addEventListener('click', function () {
-                if (currentSongIndex < songs.length - 1) {
-                    currentSongIndex++;
-                } else {
-                    currentSongIndex = 0;
-                 }
-                audio.pause();
-                audio.src = songs[currentSongIndex].urlSong;
-                audio.oncanplaythrough = function() {
-                    audio.play();
-                    audio.oncanplaythrough = null; // Elimina el evento después de reproducir 
-                }
-                // Es necesario generar nuevamente la UI, para que se muestre la nueva canción
-                generateMusicPlayer(songs[currentSongIndex])
-                }/* .bind(this) */);
-    
-             // Al hacer click en Mute...
-             muteButton.addEventListener('click', function() {
-                if (audio.muted) {
-                    audio.muted = false;
-                    
-                    
-                } else {
-                    audio.muted = true;
-                    
-                }
-                }/* .bind(this) */);
             }
+            generateMusicPlayer(songs[currentSongIndex])
+
+        }
+
+
+        // Al hacer click en Play... cambia el boton a stop y viceversa
+        playButton.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                // Cambiar ícono a pausa
+                playIcon.classList.remove('fa-circle-play');
+                playIcon.classList.add('fa-pause-circle');
+            } else {
+                audio.pause();
+                // Cambiar ícono a play
+                playIcon.classList.remove('fa-pause-circle');
+                playIcon.classList.add('fa-circle-play');
+            }
+        });
+    
+
+        //Event listener de los otros botones
+        // Al hacer click en Stop...
+        stopButton.addEventListener('click', function () {
+            audio.pause();
+            audio.currentTime = 0;
+            });
+        // Al hacer click en Previous 
+        prevSongButton.addEventListener('click', () => {
+            songs = this.currentPlayList;
+            if (currentSongIndex > 0) {
+                currentSongIndex--;
+            } else {
+                currentSongIndex = songs.length - 1;
+            }
+            audio.pause();
+            audio.src = songs[currentSongIndex].urlSong;
+
+            audio.oncanplaythrough = function() {
+                audio.play();
+                audio.oncanplaythrough = null; // Elimina el evento después de reproducir 
+            }
+            // Es necesario generar nuevamente la UI, para que se muestre la nueva canción
+            generateMusicPlayer(songs[currentSongIndex])
+            }/* .bind(this) */);
+        
+        // Al hacer click en Next...
+        nextSongButton.addEventListener('click',  ()=> {
+            songs = this.currentPlayList;
+            if (currentSongIndex < songs.length - 1) {
+                currentSongIndex++;
+            } else {
+                currentSongIndex = 0;
+                }
+            audio.pause();
+            audio.src = songs[currentSongIndex].urlSong;
+            audio.oncanplaythrough = function() {
+                audio.play();
+                audio.oncanplaythrough = null; // Elimina el evento después de reproducir 
+            }
+            // Es necesario generar nuevamente la UI, para que se muestre la nueva canción
+            generateMusicPlayer(songs[currentSongIndex])
+            }/* .bind(this) */);
+
+            // Al hacer click en Mute...
+        muteButton.addEventListener('click', function() {
+            if (audio.muted) {
+                audio.muted = false;
+                
+                
+            } else {
+                audio.muted = true;
+                
+            }
+            }/* .bind(this) */);
+        }
 
             
         }
 
-    
-    
-    
     function formatDuration(duration) {
         let minutes = Math.floor(duration / 60);
         let seconds = Math.floor(duration % 60);
