@@ -32,11 +32,11 @@ loginBtn.addEventListener('click', (event) => {
         console.log(user);
         localStorage.setItem('isLogged', true) // Se crea una variable en el local storage, y se le asigna 'true' como valor
         localStorage.setItem('userName', userInput.value) // Se crea una variable en el local storage, y se le asigna el usuario como valor
-        window.location.href = "./reproductor.html"
+        window.location.href = "./reproductor_1502.html"
     }else alert("Usuario/Contraseña incorrecto(s)")
 })
 /* En caso de estar ya loggeado, se redirige siempre al usuario al Home */
 if(localStorage.getItem('isLogged') === true){
-    window.location.href = "./reproductor.html"
+    window.location.href = "./reproductor_1502.html"
 }
 
