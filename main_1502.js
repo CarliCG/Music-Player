@@ -65,62 +65,12 @@
             this.songs.splice(index, 1) // Si existe la canción, se borra usando su posición(index), solo ese elemento ('1')
             this.renderList(); 
         }
-
-        changeBtn(song){
-            let favIcon = ""
-            let playListIcon = "" 
-
-            if(song.onPlayList){
-                playListIcon = "fa fa-minus-circle" // icono +
-            }else{
-                playListIcon = "fa-solid fa-plus" // icono -
-            }
-
-            if(song.isFav){
-                favIcon = "fa fa-heart" // icono añadir
-            }else{
-                favIcon = "fa-regular fa-heart" // icono quitar
-            }
-        }
         
-        myPlaylistBtn(song){
-            
-            console.log("funciona playlist btn")
-            let playListIcon = "" 
-
-            if(song.onPlayList){
-                playListIcon = "fa fa-minus-circle" // icono +
-            }else{
-                playListIcon = "fa-solid fa-plus" // icono -
-            }
-
-            if(!song.onPlayList){
-                myPlaylist.addSong(song);
-                song.onPlayList = true;
-            }else{
-                song.onPlayList = false
-                myPlaylist.removeSong(song)
-            }
-            this.renderList()
-        }
-
-        myFavsBtn(song){
-            console.log("funciona fav btn")
-
-            if(!song.isFav){
-                myFavorite.addSong(song);
-                song.isFav = true;
-            }else{
-                song.isFav = false
-                myFavorite.removeSong(song)
-            }
-            myFavorite.renderList()
-        }
-        
-        renderList(lista = this.songs, container = this.container){
+        renderList(lista = this.songs, container = this.container, listName = this.listName){
             let contenedor = document.getElementById(container);
             /* Muestra todas las canciones de la lista en cuestión */
             contenedor.innerHTML = "";
+            console.log("resultados búsqueda", lista)
             lista.forEach(
                 song => {
                     let favIcon = ""
@@ -138,13 +88,12 @@
                         favIcon = "fa-regular fa-heart" // icono quitar
                     }
 
-                    contenedor.innerHTML += `<li><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlist${song.id}${this.listName}" onClick='myPlaylist.renderlist()' class="${playListIcon}"></i><i onClick='myFavorite.renderlist()' id="favs${song.id}${this.listName}" class="${favIcon}"></i></li>`  
+                    contenedor.innerHTML += `<li><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlist${song.id}${listName}"  class="${playListIcon}"></i><i  id="favs${song.id}${listName}" class="${favIcon}"></i></li>`  
                 });
 
             lista.forEach(song => {
-                document.getElementById(`playlist${song.id}${this.listName}`).addEventListener('click', () => {
+                document.getElementById(`playlist${song.id}${listName}`).addEventListener('click', () => {
                     // Aquí va el código para añadir la canción a la lista de reproducción
-                    console.log("funciona playlist btn")
                     if(!song.onPlayList){
                         myPlaylist.addSong(song);
                         song.onPlayList = true;
@@ -155,13 +104,9 @@
                     biblioGeneral.renderList()
                     myFavorite.renderList()
                     myPlaylist.renderList()
-
-                    /* myPlaylist.renderList() */
                 });
-                document.getElementById(`favs${song.id}${this.listName}`).addEventListener('click', () => {
+                document.getElementById(`favs${song.id}${listName}`).addEventListener('click', () => {
                     // Aquí va el código para añadir la canción a favoritos
-                    console.log("funciona fav btn")
-
                     if(!song.isFav){
                         myFavorite.addSong(song);
                         song.isFav = true;
@@ -172,8 +117,6 @@
                     biblioGeneral.renderList()
                     myPlaylist.renderList()
                     myFavorite.renderList()
-
-                    /* myFavorite.renderList() */
                 });
             });
         };
@@ -185,7 +128,7 @@
         // También hace falta una fx que nos permita añadir y quitar a Favs y MyPlaylist (ya existe el método removeSong), y cambiar según eso los íconos de las canciones (usar los atributos isFav y onList de la clase Song, cambiar sus valores c/vez que demos click en los respectivos botones)
     
         // Método Buscar (por canción, artista, álbum, género)
-        searchBy(met, listaCanciones = this.songs){
+        searchBy(met = this.renderList(), listaCanciones = this.songs){
             // Captura la barra de input donde ingresamos la canción a buscar
             const buscador = document.getElementById("input-buscador")
             listaCanciones = this.songs;
@@ -200,7 +143,6 @@
                     let expresion = new RegExp(input, "i");
                     /* Función para comparar input con array */
                     const inputResultado = comparar(listaCanciones, expresion);
-                    /* console.log(inputResultado) */
         
                     let tituloBusqueda= document.getElementById("biblio-titulo");
                     if(!this.value){
@@ -209,7 +151,7 @@
                         tituloBusqueda.textContent = "Resultados de la búsqueda:";
                     }
                     // Muestra los resultados en la sección izquierda, y retorna los mismos 
-                    met(inputResultado, "lista-general")
+                    met(inputResultado, "lista-general", biblioGeneral.listName)
                     return(inputResultado, "lista-general")
                 });
             }
@@ -463,9 +405,6 @@
             </div>
             `
         })
-
-
-        
     }
     
     // Al hacer click en c/canción, independientemente de su lista, se ejecutará esta función
@@ -482,28 +421,14 @@
         const song = musicPlayer.currentPlayList.find(s => s.id === songId);
         // 2. Obtenemos el index de la canción en dicha playlist
         musicPlayer.setCurrentSong(musicPlayer.currentPlayList.indexOf(song))
-        
-       // console.log("Supuesto id", musicPlayer.currentSongIndex)
-        //console.log("Supuesto music player", musicPlayer)
-
         // 3. Seteamos los datos de la canción en el url del objeto Audio
         audio.src = song.urlSong
-       // console.log("Supuesto url",audio.src)
         // 4. Reiniciamos el UI del reproductor, para que cargue, muestre y controle la canción que hemos seleccionado
         musicPlayer.renderMusicPlayer()
         musicPlayer.playFromList()
         
     }
-   /*  document.querySelectorAll('.cancion').forEach(cancion => {
-        cancion.addEventListener('click', (e) => {
-            const songId = parseInt(cancion.getAttribute('data-idSong'));
-            changeCurrentSong(songId, biblioGeneral.songs);
 
-            console.log("Mostrar evento",e) //Por lo pronto no muestra nada
-            e.target.classList.add("onPlay")
-            // Parece que todo este querySelector no funciona
-        });
-    }); */
     /* Crear lista de nuevas canciones */
     const songs = [
         
@@ -638,7 +563,7 @@
             gender: "Christian rock",
             year: "2018",
             urlSong: "./src/songs/stay.mp3",
-            urlCover: ".src/img/robbie_giveYourselfAway.jpg"
+            urlCover: "./src/img/robbie_give_yourself_away.jpg"
     
         }),
         new Song({
@@ -705,7 +630,7 @@
             duration: "2:55",
             gender: "Rock",
             urlSong: "./src/songs/Joan Jett & the Blackhearts - I Love Rock N Roll (Official Video).mp3",
-            urlCover: "src\img\i_love_rock_n_roll.jpg"
+            urlCover: "src/img/i_love_rock_n_roll.jpg"
         }),
     
         new Song({
@@ -749,7 +674,7 @@
             duration: "2:01",
             gender: "Rock",
             urlSong: "./src/songs/Queen - We Will Rock You (Official Video)_-tJYN-eG1zk.mp3",
-            urlCover: "./src/img/We_Will_Rock_You_by_Queen_(1977_French_single).png"
+            urlCover: "./src/img/We_Will_Rock_You.png"
         }),
     
         new Song({
@@ -877,7 +802,7 @@ const myPlaylist = new Playlist({
     listName: "My PlayList",
     container: "lista-general-2" // lista de canciones con like.
 })
-const myFavorite=new Playlist({
+const myFavorite = new Playlist({
     listName:'My Favorite',
     container: 'lista-general-3'//Lista de canciones favoritas.
 })
@@ -895,70 +820,6 @@ const myFavorite=new Playlist({
     /* Ejecutar la búsqueda (lado izq) */
     biblioGeneral.searchBy(biblioGeneral.renderList)
     
+    // Cargar, mostrar y controlar la 1era canción de la playlist por defecto
+    musicPlayer.renderMusicPlayer()
 
-    
-/* myPlaylist.renderList() */
-// Cargar, mostrar y controlar la 1era canción de la playlist por defecto
-musicPlayer.renderMusicPlayer()
-
-
-//Funcionalidad boton My Playlist
-/* const myPlaylistBtn = document.getElementById('myPlaylistBtn');
-myPlaylistBtn.addEventListener('click', () => {
-    myPlaylist.renderList();
-    console.log('funciona el botón My Playlist')
-}); */
-
-//Agrego la funcionalidad del botón de + para agregar a My Playlist y Favoritos las canciones
-/* document.querySelectorAll('#playlistBtn').forEach(item => {
-    item.addEventListener('click', () => {
-        const songId = parseInt(item.previousElementSibling.getAttribute('data-idSong'));
-        const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
-
-        if (myPlaylist.container.includes('2')) { // Verifica si es la lista de My Playlist
-            if(!songToAdd.onPlayList){
-                myPlaylist.addSong(songToAdd);
-                songToAdd.onPlayList = true;
-            }else{
-                myPlaylist.removeSong(songToAdd)
-                songToAdd.onPlayList = false
-            }
-        } 
-        
-        myPlaylist.renderList();
-        myFavorite.renderList();
-        console.log('funciona el botón My Playlist')
-        
-        
-    });
-}); */
-
-//Funcionalidad boton Favoritos
-/* const favoritosBtn = document.getElementById('favoritosBtn');
-favoritosBtn.addEventListener('click', () => {
-    myFavorite.renderList();
-    console.log('funciona el botón Favoritos')
-});  */
-
-// Agrego la funcionalidad de los corazones para agregar a Favoritos las canciones
-/* document.querySelectorAll('#favBtn').forEach(item => {
-    item.addEventListener('click', () => {
-        const songId = parseInt(item.parentElement.querySelector('.cancion').getAttribute('data-idSong'));
-        const songToAdd = biblioGeneral.songs.find(song => song.id === songId);
-
-        if (myFavorite.container.includes('3')) { 
-            if(!songToAdd.isFav){
-                myFavorite.addSong(songToAdd);
-                songToAdd.isFav = true;
-            }else{
-                myFavorite.removeSong(songToAdd)
-                songToAdd.isFav = false
-            }
-            
-            
-        }
-        myFavorite.renderList();
-        myPlaylist.renderList();
-        console.log('funciona el botón Favoritos')
-    });
-}); */
