@@ -65,7 +65,57 @@
             this.songs.splice(index, 1) // Si existe la canción, se borra usando su posición(index), solo ese elemento ('1')
             this.renderList(); 
         }
-    
+
+        changeBtn(song){
+            let favIcon = ""
+            let playListIcon = "" 
+
+            if(song.onPlayList){
+                playListIcon = "fa fa-minus-circle" // icono +
+            }else{
+                playListIcon = "fa-solid fa-plus" // icono -
+            }
+
+            if(song.isFav){
+                favIcon = "fa fa-heart" // icono añadir
+            }else{
+                favIcon = "fa-regular fa-heart" // icono quitar
+            }
+        }
+        
+        myPlaylistBtn(song){
+            
+            console.log("funciona playlist btn")
+            let playListIcon = "" 
+
+            if(song.onPlayList){
+                playListIcon = "fa fa-minus-circle" // icono +
+            }else{
+                playListIcon = "fa-solid fa-plus" // icono -
+            }
+
+            if(!song.onPlayList){
+                myPlaylist.addSong(song);
+                song.onPlayList = true;
+            }else{
+                song.onPlayList = false
+                myPlaylist.removeSong(song)
+            }
+            this.renderList()
+        }
+
+        myFavsBtn(song){
+            console.log("funciona fav btn")
+
+            if(!song.isFav){
+                myFavorite.addSong(song);
+                song.isFav = true;
+            }else{
+                song.isFav = false
+                myFavorite.removeSong(song)
+            }
+            myFavorite.renderList()
+        }
         
         renderList(lista = this.songs, container = this.container){
             let contenedor = document.getElementById(container);
@@ -77,24 +127,24 @@
                     let playListIcon = "" 
 
                     if(song.onPlayList){
-                        playListIcon = "fa fa-minus-circle"
+                        playListIcon = "fa fa-minus-circle" // icono +
                     }else{
-                        playListIcon = "fa-solid fa-plus"
+                        playListIcon = "fa-solid fa-plus" // icono -
                     }
 
                     if(song.isFav){
-                        favIcon = "fa fa-heart"
+                        favIcon = "fa fa-heart" // icono añadir
                     }else{
-                        favIcon = "fa-regular fa-heart"
+                        favIcon = "fa-regular fa-heart" // icono quitar
                     }
 
-                    contenedor.innerHTML += `<li><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlistBtn${song.id}" class="${playListIcon}"></i><i id="favBtn${song.id}" class="${favIcon}"></i></li>`  
+                    contenedor.innerHTML += `<li><h3 onClick='changeCurrentSong(${song.id}, ${JSON.stringify(lista)})' class="cancion" data-idSong=${song.id}>${song.name}</h3><i id="playlist${song.id}${this.listName}" onClick='myPlaylist.renderlist()' class="${playListIcon}"></i><i onClick='myFavorite.renderlist()' id="favs${song.id}${this.listName}" class="${favIcon}"></i></li>`  
                 });
 
             lista.forEach(song => {
-                document.getElementById(`playlistBtn${song.id}`).addEventListener('click', () => {
+                document.getElementById(`playlist${song.id}${this.listName}`).addEventListener('click', () => {
                     // Aquí va el código para añadir la canción a la lista de reproducción
-                    console.log("funciona")
+                    console.log("funciona playlist btn")
                     if(!song.onPlayList){
                         myPlaylist.addSong(song);
                         song.onPlayList = true;
@@ -102,11 +152,15 @@
                         song.onPlayList = false
                         myPlaylist.removeSong(song)
                     }
+                    biblioGeneral.renderList()
+                    myFavorite.renderList()
                     myPlaylist.renderList()
+
+                    /* myPlaylist.renderList() */
                 });
-                document.getElementById(`favBtn${song.id}`).addEventListener('click', () => {
+                document.getElementById(`favs${song.id}${this.listName}`).addEventListener('click', () => {
                     // Aquí va el código para añadir la canción a favoritos
-                    console.log("funciona")
+                    console.log("funciona fav btn")
 
                     if(!song.isFav){
                         myFavorite.addSong(song);
@@ -115,7 +169,11 @@
                         song.isFav = false
                         myFavorite.removeSong(song)
                     }
+                    biblioGeneral.renderList()
+                    myPlaylist.renderList()
                     myFavorite.renderList()
+
+                    /* myFavorite.renderList() */
                 });
             });
         };
