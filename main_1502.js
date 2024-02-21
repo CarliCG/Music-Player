@@ -1,7 +1,4 @@
-/* Validaciones conscernientes al Login */
-/* setTimeout(() => {
-}, 1000) */
-/* Si no estás loggeado, te redirige al login. No puedes acceder al Music player */
+
 
 if(!localStorage.getItem('isLogged')){ 
     window.location.href = "./login.html"
