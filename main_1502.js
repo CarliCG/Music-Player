@@ -1,11 +1,15 @@
 /* Validaciones conscernientes al Login */
 /* setTimeout(() => {
-    if(!localStorage.getItem('isLogged')){ 
-        console.log('no estas logeado', localStorage.getItem('isLogged'))
-    }
 }, 1000) */
 /* Si no estás loggeado, te redirige al login. No puedes acceder al Music player */
+
+if(!localStorage.getItem('isLogged')){ 
+    window.location.href = "./login.html"
+    console.log('no estas logeado')
     
+}else{
+    console.log("Bienvenido")
+}
     /* Para hacer log out... */ 
     const logoutBtn = document.getElementById('logout')
     logoutBtn.addEventListener('click', () => {
