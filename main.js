@@ -401,6 +401,8 @@ if(!localStorage.getItem('isLogged')){
                     <div class="cancion-titulos">
                         <p id="cancion-artista">${song.artist}</p>
                         <p id="cancion-album">${song.album}</p>
+                        <p id='anio'> ${song.year}</p>
+                        <p id='genero'> ${song.gender}</p>
                     </div>
                     <div class="cancion-duracion">
                         <h3 id="cancion-duracion">${song.duration}</h3>

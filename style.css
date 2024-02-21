@@ -232,8 +232,8 @@ main{
 
     min-width: 90%;
     max-width: 90%;
-    height: 96vh;
-    max-height: 100vh;
+    height: 102vh;
+    max-height: 102vh;
     display: grid;
     grid-template-rows: 1fr 2fr;
     justify-self: center;
@@ -267,7 +267,7 @@ main{
 .reproductor .musicPlayer-cover .music-info-container{
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: 1fr 2fr;
     grid-template-areas: 
         "titulo       titulo       titulo"
         "info-cancion info-cancion duracion";
