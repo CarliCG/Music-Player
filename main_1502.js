@@ -1,4 +1,3 @@
-
 /* Validaciones conscernientes al Login */
 /* setTimeout(() => {
     if(!localStorage.getItem('isLogged')){ 
@@ -8,13 +7,13 @@
 /* Si no estás loggeado, te redirige al login. No puedes acceder al Music player */
     
     /* Para hacer log out... */ 
-    const logoutBtn = document.getElementById('logout')
+/*     const logoutBtn = document.getElementById('logout')
     logoutBtn.addEventListener('click', () => {
         console.log("salir")
         localStorage.removeItem('isLogged')
         localStorage.removeItem('userName')
         window.location.href = "./login.html"
-    })
+    }) */
     
     /* Para mostrar el nombre de usuario en el navbar, una vez loggeado */
     let user = localStorage.getItem('userName')
